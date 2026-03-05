@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kristina Mozhaieva | Моя особиста сторінка</title>
-  <meta name="description" content="Особиста сторінка: семестри, улюблені фільми, настрій, цитата, карта, слайдер фото. HTML/CSS/JS." />
+  <meta name="description" content="Особиста сторінка: навчання (семестри), улюблені шоу, настрій, слайдер, карта. HTML/CSS/JS." />
 
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js" defer></script>
@@ -15,11 +15,12 @@
     <div class="container topbar__inner">
       <a class="brand" href="#top" aria-label="На початок">
         <span class="brand__logo">KM</span>
-        <span class="brand__text">My Personal Page</span>
+        <span class="brand__text">Personal Page</span>
       </a>
 
-      <nav class="nav">
-        <a href="#study">Семестри</a>
+      <nav class="nav" aria-label="Навігація">
+        <a href="#about">Про мене</a>
+        <a href="#study">Навчання</a>
         <a href="#favorites">Улюблене</a>
         <a href="#moods">Настрій</a>
         <a href="#slideshow">Слайдер</a>
@@ -37,9 +38,9 @@
 
   <main class="container">
     <!-- HERO -->
-    <section class="hero">
-      <div class="hero__left card">
-        <div class="badge">HTML • CSS • JavaScript • GitHub Pages</div>
+    <section class="hero" id="about">
+      <div class="card hero__left">
+        <p class="badge">HTML • CSS • JavaScript • GitHub Pages</p>
 
         <h1 class="title">Kristina Mozhaieva</h1>
         <p class="subtitle">
@@ -47,30 +48,47 @@
           <a href="mailto:kristinamozaeva776@gmail.com">kristinamozaeva776@gmail.com</a>
         </p>
 
-        <div class="quick">
-          <a class="btn" href="#study">Перейти до семестрів</a>
-          <a class="btn btn--ghost" href="#slideshow">Слайдер фото</a>
+        <div class="split">
+          <div class="mini">
+            <h2 class="h2">3 слова про мене</h2>
+            <ul class="chips">
+              <li class="chip">Наполеглива</li>
+              <li class="chip">Допитлива</li>
+              <li class="chip">Відповідальна</li>
+            </ul>
+          </div>
+
+          <blockquote class="quote">
+            <p>“Your time is limited, so don’t waste it living someone else’s life.”</p>
+            <footer>— Steve Jobs</footer>
+          </blockquote>
         </div>
 
-        <div class="meta muted">
-          <span>© <span id="year"></span></span>
-          <span class="sep">•</span>
-          <span class="muted">Light/Dark theme + sliders</span>
+        <div class="quick">
+          <a class="btn" href="#study">Навчання</a>
+          <a class="btn btn--ghost" href="#favorites">Фільми/шоу</a>
+          <a class="btn btn--ghost" href="#slideshow">Слайдер</a>
         </div>
+
+        <p class="muted tiny">
+          © <span id="year"></span> • Light/Dark тема збережеться автоматично
+        </p>
       </div>
 
-      <div class="hero__right card">
-        <h2 class="h2">3 слова про мене</h2>
-        <ul class="chips" id="words">
-          <li class="chip">Наполеглива</li>
-          <li class="chip">Допитлива</li>
-          <li class="chip">Відповідальна</li>
+      <div class="card hero__right">
+        <h2 class="h2">Контакти</h2>
+        <ul class="contactList">
+          <li><strong>Email:</strong> <a href="mailto:kristinamozaeva776@gmail.com">kristinamozaeva776@gmail.com</a></li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/krikatletka" target="_blank" rel="noreferrer">krikatletka</a></li>
+          <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/kristina-mozhaieva-5092183a5/" target="_blank" rel="noreferrer">profile</a></li>
         </ul>
 
-        <blockquote class="quote">
-          <p id="quoteText">“Your time is limited, so don’t waste it living someone else’s life.”</p>
-          <footer id="quoteAuthor">— Steve Jobs</footer>
-        </blockquote>
+        <div class="softBox">
+          <h3 class="h3">Моє хобі</h3>
+          <p class="muted">
+            Балет, навчання, програмування, красиві UI і “щоб усе було акуратно” 💗
+          </p>
+        </div>
       </div>
     </section>
 
@@ -78,8 +96,8 @@
     <section class="card section" id="study">
       <div class="section__head">
         <div>
-          <h2 class="h2">Залікова книжка — семестри</h2>
-          <p class="muted">Семестри листаються як слайдер (JS). Таблиця генерується динамічно.</p>
+          <h2 class="h2">Навчання — семестри</h2>
+          <p class="muted">Перемикається як слайдер. Таблиця будується з JavaScript.</p>
         </div>
 
         <div class="segmented" role="group" aria-label="Перемикач семестрів">
@@ -91,8 +109,8 @@
 
       <div class="dots" id="semDots" aria-label="Семестри"></div>
 
-      <div class="tableWrap" role="region" aria-label="Таблиця предметів" tabindex="0">
-        <table class="table" id="studyTable">
+      <div class="tableWrap" id="tableWrap" role="region" aria-label="Таблиця предметів" tabindex="0">
+        <table class="table" aria-describedby="study">
           <thead>
             <tr>
               <th>#</th>
@@ -105,29 +123,34 @@
           <tbody id="studyBody"></tbody>
         </table>
       </div>
+
+      <p class="muted tiny">
+        Якщо десь не співпадають бали — ти просто скинеш точні значення, і я за 1 хвилину підставлю.
+      </p>
     </section>
 
     <!-- FAVORITES -->
     <section class="grid section" id="favorites">
       <div class="card">
         <h2 class="h2">5 улюблених фільмів / ТВ-шоу</h2>
-        <p class="muted">Тут теж зробимо “красиво”: список як міні-картки. Заміниш на свої.</p>
+        <p class="muted">Натисни на картку — відкриється вікно зі скрінами + кнопка-посилання.</p>
 
         <div class="favlist" id="favList"></div>
 
         <p class="muted tiny">
-          Якщо хочеш — просто напиши мені свої 5 назв, і я підставлю в код (і дам красиві посилання).
+          Твій список уже доданий: GOT, Stranger Things, The Vampire Diaries, Harry Potter, + 1 тимчасовий (можеш замінити).
         </p>
       </div>
 
       <div class="card">
-        <h2 class="h2">Міні-контроль</h2>
+        <h2 class="h2">Міні-чек</h2>
         <ul class="checklist">
-          <li>✅ Дві теми (light/dark) + збереження</li>
+          <li>✅ Дві теми (рожево-фіолетова / чорна)</li>
           <li>✅ Семестри як слайдер (JS)</li>
-          <li>✅ Фото-слайдер (JS)</li>
-          <li>✅ Адаптивність</li>
+          <li>✅ Слайдер фото (JS)</li>
+          <li>✅ Модалка для фільмів/шоу (JS)</li>
           <li>✅ Карта</li>
+          <li>✅ Адаптивність</li>
         </ul>
       </div>
     </section>
@@ -137,7 +160,7 @@
       <div class="section__head">
         <div>
           <h2 class="h2">Я у 3-х настроях</h2>
-          <p class="muted">Фото будуть круглі/округлі, з підписами. Якщо фото не знайдено — буде красивий placeholder.</p>
+          <p class="muted">Фото округлі + підписи. Якщо фото не знайдено — буде красивий фон.</p>
         </div>
       </div>
 
@@ -170,7 +193,7 @@
       <div class="section__head">
         <div>
           <h2 class="h2">Слайдер фото (по колу)</h2>
-          <p class="muted">Постав фото міста/подорожей/балету в <code>img/slide1.jpg</code> … <code>slide4.jpg</code></p>
+          <p class="muted">Фото в <code>img/slide1.jpg</code>…<code>img/slide4.jpg</code>. Є автопрокрутка.</p>
         </div>
 
         <div class="sliderBtns">
@@ -179,7 +202,7 @@
         </div>
       </div>
 
-      <div class="slider" id="slider">
+      <div class="slider">
         <div class="slider__viewport" id="sliderViewport">
           <img class="slide is-active" src="img/slide1.jpg" alt="Слайд 1" loading="lazy" />
           <img class="slide" src="img/slide2.jpg" alt="Слайд 2" loading="lazy" />
@@ -190,19 +213,20 @@
         <div class="dots dots--center" id="slideDots" aria-label="Навігація слайдера"></div>
       </div>
 
-      <p class="muted tiny">Підказка: стрілки клавіатури ← → теж працюють.</p>
+      <p class="muted tiny">Стрілки клавіатури ← → теж працюють.</p>
     </section>
 
     <!-- PLACE -->
     <section class="grid section" id="place">
       <div class="card">
         <h2 class="h2">Цікаве про місце, де я живу</h2>
-        <p class="muted" id="placeText">
-          Я живу в Нідерландах. Тут багато велосипедів, дуже охайні містечка і класна інфраструктура —
-          а ще погода змінюється дуже швидко 🙂
+        <p class="muted">
+          Амстердам — місто каналів, велосипедів і дуже живої атмосфери. Тут завжди є що подивитися,
+          і майже кожен район має свій характер.
         </p>
+
         <div class="pillRow">
-          <span class="pill" id="placeName">Heemskerk</span>
+          <span class="pill">Amsterdam</span>
           <span class="pill">Netherlands</span>
         </div>
       </div>
@@ -212,8 +236,7 @@
         <div class="map">
           <iframe
             title="Google Map"
-            id="mapFrame"
-            src="https://www.google.com/maps?q=Heemskerk&output=embed"
+            src="https://www.google.com/maps?q=Amsterdam&output=embed"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>

@@ -1,18 +1,18 @@
-// ===== utils =====
+// ========================
+// Helpers
+// ========================
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const clampIndex = (i, len) => (i % len + len) % len;
 
-function clampIndex(i, len) {
-  return (i % len + len) % len;
-}
-
-// ===== year =====
+// ========================
+// Year
+// ========================
 $("#year").textContent = new Date().getFullYear();
 
-// =====================================================
-// THEME (pink/purple light) <-> (dark)
-// + save in localStorage
-// =====================================================
+// ========================
+// Theme: light (pink/purple) <-> dark (black)
+// ========================
 const THEME_KEY = "km_theme";
 const themeBtn = $("#themeBtn");
 const themeBtnText = $("#themeBtnText");
@@ -40,80 +40,78 @@ themeBtn.addEventListener("click", () => {
   setTheme(isDark ? "light" : "dark");
 });
 
-// =====================================================
-// FAVORITES (render as cards)
-// =====================================================
-const favorites = [
-  { title: "Game of Thrones", url: "https://www.imdb.com/title/tt0944947/", tag: "TV" },
-  { title: "The Vampire Diaries", url: "https://www.imdb.com/title/tt1405406/", tag: "TV" },
-  { title: "Stranger Things", url: "https://www.imdb.com/title/tt4574334/", tag: "TV" },
-  { title: "Interstellar", url: "https://www.imdb.com/title/tt0816692/", tag: "Movie" },
-  { title: "Forrest Gump", url: "https://www.imdb.com/title/tt0109830/", tag: "Movie" },
-];
-
-const favList = $("#favList");
-favList.innerHTML = favorites.map((f, idx) => `
-  <div class="favitem">
-    <div>
-      <strong>${idx + 1}. <a href="${f.url}" target="_blank" rel="noreferrer">${f.title}</a></strong>
-    </div>
-    <div class="favtag">${f.tag}</div>
-  </div>
-`).join("");
-
-// =====================================================
-// SEMESTERS (your data) — slider with dots
-// Table is built via JS => no лагов/дубликатов
-// =====================================================
+// ========================
+// Semesters data (можно потом править)
+// ========================
 const semesters = [
   {
     label: "Семестр 1",
     rows: [
-      { name: "Алгоритмізація та програмування", teacher: "Сенько А.В. [КМПС]", score: 90, ects: "A" },
-      { name: "Аналітична геометрія", teacher: "Морачковська І.О. [ПМ]", score: 100, ects: "A" },
-      { name: "Історія та культура України", teacher: "Красіков М.М. [УКІН]", score: 100, ects: "A" },
-      { name: "Математичний аналіз", teacher: "Лінник Г.Б. [ПМ]", score: 100, ects: "A" },
-      { name: "Архітектура обчислювальних систем", teacher: "Водка О.О. [ММІОІ]", score: 97, ects: "A" },
-      { name: "Вступ за спеціальністю. Ознайомча практика", teacher: "Шеліхова І.Б. [ГМКГ]", score: 99, ects: "A" },
-      { name: "Іноземна мова", teacher: "Новицька Д.Є. [МКІМ]", score: 90, ects: "A" },
-      { name: "Фізичне виховання", teacher: "Ширяєва С.В. [ФВ]", score: 100, ects: "A" },
+      { name: "Алгоритмізація та програмування", teacher: "Сенько А.В.", score: 90, ects: "A" },
+      { name: "Аналітична геометрія", teacher: "Морачковська І.О.", score: 100, ects: "A" },
+      { name: "Історія та культура України", teacher: "Красіков М.М.", score: 100, ects: "A" },
+      { name: "Математичний аналіз", teacher: "Лінник Г.Б.", score: 100, ects: "A" },
+      { name: "Архітектура обчислювальних систем", teacher: "Водка О.О.", score: 97, ects: "A" },
+      { name: "Ознайомча практика", teacher: "Шеліхова І.Б.", score: 99, ects: "A" },
+      { name: "Іноземна мова", teacher: "Новицька Д.Є.", score: 90, ects: "A" },
+      { name: "Фізичне виховання", teacher: "Ширяєва С.В.", score: 100, ects: "A" },
     ],
   },
   {
     label: "Семестр 2",
     rows: [
-      { name: "Дискретна математика", teacher: "Татарінова О.А. [КМПС]", score: 100, ects: "A" },
-      { name: "Лінійна алгебра", teacher: "Морачковська І.О. [ПМ]", score: 100, ects: "A" },
-      { name: "Об'єктно-орієнтоване програмування та проектування", teacher: "Розова Л.В. [ММІОІ]", score: 100, ects: "A" },
-      { name: "Спеціальні глави вищої математики", teacher: "Лінник Г.Б. [ПМ]", score: 100, ects: "A" },
-      { name: "Українська мова (професійного спрямування)", teacher: "Писарська Н.В. [УРМПЛ]", score: 95, ects: "A" },
-      { name: "Іноземна мова", teacher: "Орда О.Ф. [МКІМ]", score: 100, ects: "A" },
-      { name: "Операційні системи", teacher: "Метєльов В.О. [КМПС]", score: 100, ects: "A" },
-      { name: "Фізичне виховання", teacher: "Ширяєва С.В. [ФВ]", score: 100, ects: "A" },
+      { name: "Дискретна математика", teacher: "Татарінова О.А.", score: 100, ects: "A" },
+      { name: "Лінійна алгебра", teacher: "Морачковська І.О.", score: 100, ects: "A" },
+      { name: "ООП та проектування", teacher: "Розова Л.В.", score: 100, ects: "A" },
+      { name: "Спеціальні глави вищої математики", teacher: "Лінник Г.Б.", score: 100, ects: "A" },
+      { name: "Українська мова (проф.)", teacher: "Писарська Н.В.", score: 95, ects: "A" },
+      { name: "Іноземна мова", teacher: "Орда О.Ф.", score: 100, ects: "A" },
+      { name: "Операційні системи", teacher: "Метєльов В.О.", score: 100, ects: "A" },
+      { name: "Фізичне виховання", teacher: "Ширяєва С.В.", score: 100, ects: "A" },
     ],
   },
   {
     label: "Семестр 3",
     rows: [
-      { name: "Математична логіка, теорія алгоритмів та структури даних", teacher: "Татарінова О.А. [КМПС]", score: 100, ects: "A" },
-      { name: "Нарисна геометрія в задачах візуалізації", teacher: "Федченко Г.В. [ГМКГ]", score: 96, ects: "A" },
-      { name: "Організація баз даних", teacher: "Мартиненко Г.Ю. [ММІОІ]", score: 100, ects: "A" },
-      { name: "Програмування GUI", teacher: "Дашкевич А.О. [ГМКГ]", score: 100, ects: "A" },
-      { name: "Технології програмування", teacher: "Шаповалова М.І. [ММІОІ]", score: 97, ects: "A" },
-      { name: "Іноземна мова", teacher: "Картун Н.О. [МКІМ]", score: 95, ects: "A" },
-      { name: "ОК СВУ", teacher: "Ширяєва С.В. [ФВ]", score: 100, ects: "A" },
-      { name: "Правознавство", teacher: "Кузьменко О.В. [П]", score: 100, ects: "A" },
+      { name: "Логіка, теорія алгоритмів і структури даних", teacher: "Татарінова О.А.", score: 100, ects: "A" },
+      { name: "Нарисна геометрія (візуалізація)", teacher: "Федченко Г.В.", score: 96, ects: "A" },
+      { name: "Організація баз даних", teacher: "Мартиненко Г.Ю.", score: 100, ects: "A" },
+      { name: "Програмування GUI", teacher: "Дашкевич А.О.", score: 100, ects: "A" },
+      { name: "Технології програмування", teacher: "Шаповалова М.І.", score: 97, ects: "A" },
+      { name: "Іноземна мова", teacher: "Картун Н.О.", score: 95, ects: "A" },
+      { name: "Фізичне виховання", teacher: "Ширяєва С.В.", score: 100, ects: "A" },
+      { name: "Правознавство", teacher: "Кузьменко О.В.", score: 100, ects: "A" },
     ],
   },
 ];
 
-const semLabel = $("#semLabel");
+// ========================
+// Semesters slider (dots + arrows)
+// ========================
 const semPrev = $("#semPrev");
 const semNext = $("#semNext");
+const semLabel = $("#semLabel");
 const semDots = $("#semDots");
 const studyBody = $("#studyBody");
+const tableWrap = $("#tableWrap");
 
 let semIndex = 0;
+
+function renderTable(rows) {
+  studyBody.innerHTML = rows
+    .map(
+      (r, idx) => `
+      <tr>
+        <td>${idx + 1}</td>
+        <td>${r.name}</td>
+        <td>${r.teacher}</td>
+        <td>${r.score}</td>
+        <td>${r.ects}</td>
+      </tr>
+    `
+    )
+    .join("");
+}
 
 function renderSemDots() {
   semDots.innerHTML = "";
@@ -127,17 +125,9 @@ function renderSemDots() {
   });
 }
 
-function renderTable(rows) {
-  // super fast render
-  studyBody.innerHTML = rows.map((r, idx) => `
-    <tr>
-      <td>${idx + 1}</td>
-      <td>${r.name}</td>
-      <td>${r.teacher}</td>
-      <td>${r.score}</td>
-      <td>${r.ects}</td>
-    </tr>
-  `).join("");
+function flashTable() {
+  tableWrap.style.boxShadow = "0 0 0 3px rgba(255,79,179,.25)";
+  setTimeout(() => (tableWrap.style.boxShadow = ""), 220);
 }
 
 function showSemester(i) {
@@ -145,8 +135,8 @@ function showSemester(i) {
   semLabel.textContent = semesters[semIndex].label;
   renderTable(semesters[semIndex].rows);
 
-  // update dots active state
   $$(".dotbtn", semDots).forEach((d, k) => d.classList.toggle("is-active", k === semIndex));
+  flashTable();
 }
 
 semPrev.addEventListener("click", () => showSemester(semIndex - 1));
@@ -155,17 +145,17 @@ semNext.addEventListener("click", () => showSemester(semIndex + 1));
 renderSemDots();
 showSemester(0);
 
-// =====================================================
-// PHOTO SLIDER (loop, dots, auto, pause on hover)
-// =====================================================
+// ========================
+// Photo slider
+// ========================
+const sliderViewport = $("#sliderViewport");
+const slides = $$(".slide", sliderViewport);
 const slidePrev = $("#slidePrev");
 const slideNext = $("#slideNext");
 const slideDots = $("#slideDots");
-const sliderViewport = $("#sliderViewport");
-const slides = $$(".slide", sliderViewport);
 
 let slideIndex = 0;
-let slideTimer = null;
+let timer = null;
 
 function renderSlideDots() {
   slideDots.innerHTML = "";
@@ -185,20 +175,26 @@ function showSlide(i) {
   $$(".dotbtn", slideDots).forEach((d, k) => d.classList.toggle("is-active", k === slideIndex));
 }
 
-function nextSlide(){ showSlide(slideIndex + 1); }
-function prevSlide(){ showSlide(slideIndex - 1); }
-function goSlide(i){ showSlide(i); }
+function nextSlide() {
+  showSlide(slideIndex + 1);
+}
+function prevSlide() {
+  showSlide(slideIndex - 1);
+}
+function goSlide(i) {
+  showSlide(i);
+}
 
 slidePrev.addEventListener("click", prevSlide);
 slideNext.addEventListener("click", nextSlide);
 
 function startAuto() {
   stopAuto();
-  slideTimer = setInterval(nextSlide, 4500);
+  timer = setInterval(nextSlide, 4500);
 }
 function stopAuto() {
-  if (slideTimer) clearInterval(slideTimer);
-  slideTimer = null;
+  if (timer) clearInterval(timer);
+  timer = null;
 }
 
 sliderViewport.addEventListener("mouseenter", stopAuto);
@@ -207,20 +203,107 @@ sliderViewport.addEventListener("focusin", stopAuto);
 sliderViewport.addEventListener("focusout", startAuto);
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") { prevSlide(); }
-  if (e.key === "ArrowRight") { nextSlide(); }
+  if (e.key === "ArrowLeft") prevSlide();
+  if (e.key === "ArrowRight") nextSlide();
 });
 
 renderSlideDots();
 showSlide(0);
 startAuto();
 
-// =====================================================
-// Graceful image fallback (if img not found => hide broken)
-// =====================================================
-$$("img").forEach(img => {
-  img.addEventListener("error", () => {
-    // hide broken icon, keep pretty background
-    img.style.opacity = "0";
-  }, { once: true });
+// ========================
+// Favorites + Modal (click card -> popup with 3 screenshots + link)
+// ========================
+const favorites = [
+  { id: "got", title: "Game of Thrones", url: "https://www.imdb.com/title/tt0944947/", tag: "TV", images: ["img/shows/got1.jpg","img/shows/got2.jpg","img/shows/got3.jpg"] },
+  { id: "st", title: "Stranger Things", url: "https://www.imdb.com/title/tt4574334/", tag: "TV", images: ["img/shows/st1.jpg","img/shows/st2.jpg","img/shows/st3.jpg"] },
+  { id: "tvd", title: "The Vampire Diaries", url: "https://www.imdb.com/title/tt1405406/", tag: "TV", images: ["img/shows/tvd1.jpg","img/shows/tvd2.jpg","img/shows/tvd3.jpg"] },
+  { id: "hp", title: "Harry Potter", url: "https://www.imdb.com/find/?q=Harry%20Potter", tag: "Movie", images: ["img/shows/hp1.jpg","img/shows/hp2.jpg","img/shows/hp3.jpg"] },
+  // 5-й временный — потом заменишь, просто поменяй title/url и имена картинок
+  { id: "x", title: "Peaky Blinders", url: "https://www.imdb.com/title/tt2442560/", tag: "TV", images: ["img/shows/x1.jpg","img/shows/x2.jpg","img/shows/x3.jpg"] },
+];
+
+const favList = $("#favList");
+
+favList.innerHTML = favorites
+  .map(
+    (f, idx) => `
+    <button class="favitem" type="button" data-open="${f.id}">
+      <div>
+        <strong>${idx + 1}. ${f.title}</strong>
+        <div class="muted tiny">Натисни, щоб відкрити (скріни + лінк)</div>
+      </div>
+      <div class="favtag">${f.tag}</div>
+    </button>
+  `
+  )
+  .join("");
+
+function openModal(item) {
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = `
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-label="${item.title}">
+      <button class="modal__close" type="button" aria-label="Close" data-close="1">✕</button>
+
+      <div class="modal__head">
+        <h3 class="modal__title">${item.title}</h3>
+        <span class="favtag">${item.tag}</span>
+      </div>
+
+      <div class="modal__grid">
+        ${item.images.map(src => `
+          <div class="modal__img">
+            <img src="${src}" alt="${item.title}" loading="lazy">
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="modal__actions">
+        <a class="btn" href="${item.url}" target="_blank" rel="noreferrer">Open link</a>
+        <button class="btn btn--ghost" type="button" data-close="1">Close</button>
+      </div>
+
+      <p class="muted tiny">Якщо картинок ще немає — додай їх у <code>img/shows</code>.</p>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  const close = () => modal.remove();
+
+  modal.addEventListener("click", (e) => {
+    const t = e.target;
+    if (t && t.dataset && t.dataset.close) close();
+  });
+
+  const esc = (e) => {
+    if (e.key === "Escape") {
+      close();
+      document.removeEventListener("keydown", esc);
+    }
+  };
+  document.addEventListener("keydown", esc);
+}
+
+favList.querySelectorAll("[data-open]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const id = btn.getAttribute("data-open");
+    const item = favorites.find((f) => f.id === id);
+    if (item) openModal(item);
+  });
+});
+
+// ========================
+// Image fallback (если файла нет — убираем "битую" иконку)
+// ========================
+$$("img").forEach((img) => {
+  img.addEventListener(
+    "error",
+    () => {
+      img.style.opacity = "0";
+    },
+    { once: true }
+  );
 });
