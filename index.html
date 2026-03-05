@@ -1,36 +1,254 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Моя особиста сторінка</title>
-
-<link rel="stylesheet" href="styles.css">
-<script src="script.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kristina Mozhaieva | Моя особиста сторінка</title>
+  <meta name="description" content="Особиста сторінка: навчання, улюблені фільми, настрій, цитата, місце проживання та слайд-шоу." />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
 </head>
 
-<body class="light">
+<body class="theme-light">
+  <a class="skip-link" href="#content">Перейти до контенту</a>
 
-<header id="top">
-<h1>Kristina Mozhaieva</h1>
-<p>Email: kristinamozaeva776@gmail.com</p>
+  <header class="topbar" id="top">
+    <div class="container topbar__inner">
+      <a class="brand" href="#top" aria-label="На початок сторінки">
+        <span class="brand__logo">KM</span>
+        <span class="brand__text">Personal Page</span>
+      </a>
 
-<button onclick="toggleTheme()">Змінити тему</button>
-</header>
+      <nav class="nav" aria-label="Навігація">
+        <a href="#about">Про мене</a>
+        <a href="#study">Навчання</a>
+        <a href="#favorites">Улюблене</a>
+        <a href="#moods">Настрій</a>
+        <a href="#slideshow">Слайд-шоу</a>
+        <a href="#place">Місце</a>
+      </nav>
 
-<section>
-<h2>3 слова про мене</h2>
+      <div class="actions">
+        <button class="btn btn--ghost" id="themeBtn" type="button" aria-pressed="false">
+          🌙 Тема
+        </button>
+      </div>
+    </div>
+  </header>
 
-<ul>
-<li>Цілеспрямована</li>
-<li>Креативна</li>
-<li>Наполеглива</li>
-</ul>
-</section>
+  <main class="container" id="content">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__card">
+        <p class="badge">HTML • CSS • JavaScript</p>
+        <h1 class="hero__title">Kristina Mozhaieva</h1>
+        <p class="hero__subtitle">
+          Email:
+          <a href="mailto:kristinamozaeva776@gmail.com">kristinamozaeva776@gmail.com</a>
+        </p>
 
-<footer>
-<p>© <span id="year"></span></p>
-</footer>
+        <div class="hero__quick">
+          <a class="btn" href="#study">До предметів</a>
+          <a class="btn btn--ghost" href="#place">Де я живу</a>
+        </div>
 
+        <div class="hero__meta">
+          <span>© <span id="year"></span></span>
+          <span class="dot">•</span>
+          <a href="#top">#top</a>
+        </div>
+      </div>
+
+      <aside class="hero__side" aria-label="Коротко про мене">
+        <div class="card">
+          <h2 class="card__title">3 слова про мене</h2>
+          <ul class="chips">
+            <li class="chip">Наполеглива</li>
+            <li class="chip">Допитлива</li>
+            <li class="chip">Відповідальна</li>
+          </ul>
+
+          <blockquote class="quote">
+            <p>“Your time is limited, so don’t waste it living someone else’s life.”</p>
+            <footer>— Steve Jobs</footer>
+          </blockquote>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="grid">
+      <article class="card">
+        <h2 class="card__title">Про мене</h2>
+        <p class="muted">
+          Привіт! Це моя особиста сторінка для університетського завдання. Тут є інформація про навчання,
+          улюблені фільми/серіали, настрій у фото, слайд-шоу та карта.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2 class="card__title">Контакти</h2>
+        <ul class="list">
+          <li><strong>Email:</strong> <a href="mailto:kristinamozaeva776@gmail.com">kristinamozaeva776@gmail.com</a></li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/krikatletka" target="_blank" rel="noreferrer">krikatletka</a></li>
+          <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/kristina-mozhaieva-5092183a5/" target="_blank" rel="noreferrer">profile</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- STUDY TABLE -->
+    <section id="study" class="card">
+      <div class="section-head">
+        <h2 class="card__title">Предмети (попередній семестр)</h2>
+        <p class="muted">Замiни значення під себе — це шаблон.</p>
+      </div>
+
+      <div class="table-wrap" role="region" aria-label="Таблиця предметів" tabindex="0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Предмет</th>
+              <th>Викладач</th>
+              <th>Оцінка</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Веб-розробка</td>
+              <td>Прізвище Імʼя</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Алгоритми та структури даних</td>
+              <td>Прізвище Імʼя</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>Бази даних</td>
+              <td>Прізвище Імʼя</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>Математичний аналіз</td>
+              <td>Прізвище Імʼя</td>
+              <td>84</td>
+            </tr>
+            <tr>
+              <td>Комп’ютерні мережі</td>
+              <td>Прізвище Імʼя</td>
+              <td>92</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FAVORITES -->
+    <section id="favorites" class="grid">
+      <article class="card">
+        <h2 class="card__title">5 улюблених фільмів / ТВ-шоу</h2>
+        <ol class="links">
+          <li><a href="https://www.imdb.com/title/tt0944947/" target="_blank" rel="noreferrer">Game of Thrones</a></li>
+          <li><a href="https://www.imdb.com/title/tt4574334/" target="_blank" rel="noreferrer">Stranger Things</a></li>
+          <li><a href="https://www.imdb.com/title/tt0903747/" target="_blank" rel="noreferrer">Breaking Bad</a></li>
+          <li><a href="https://www.imdb.com/title/tt2442560/" target="_blank" rel="noreferrer">Peaky Blinders</a></li>
+          <li><a href="https://www.imdb.com/title/tt0109830/" target="_blank" rel="noreferrer">Forrest Gump</a></li>
+        </ol>
+        <p class="muted small">Можеш замінити на свої улюблені — головне, щоб були посилання.</p>
+      </article>
+
+      <article class="card">
+        <h2 class="card__title">Міні-ціль сторінки</h2>
+        <p class="muted">
+          Показати не тільки “галочки” по вимогах, а й охайний дизайн, адаптивність і трохи творчості:
+          теми, слайдер, карта, акуратна типографіка.
+        </p>
+      </article>
+    </section>
+
+    <!-- MOODS -->
+    <section id="moods" class="card">
+      <div class="section-head">
+        <h2 class="card__title">Я у 3-х настроях</h2>
+        <p class="muted">Поклади свої фото в папку <code>img</code> і назви як нижче.</p>
+      </div>
+
+      <div class="moods">
+        <figure class="mood">
+          <img src="img/happy.jpg" alt="Щасливий настрій" loading="lazy" />
+          <figcaption>Щаслива</figcaption>
+        </figure>
+        <figure class="mood">
+          <img src="img/sad.jpg" alt="Сумний настрій" loading="lazy" />
+          <figcaption>Сумна</figcaption>
+        </figure>
+        <figure class="mood">
+          <img src="img/now.jpg" alt="Мій настрій зараз" loading="lazy" />
+          <figcaption>Зараз</figcaption>
+        </figure>
+      </div>
+
+      <p class="muted small">
+        Якщо поки немає фото — тимчасово постав будь-які 3 картинки, головне щоб різні та з підписами.
+      </p>
+    </section>
+
+    <!-- SLIDESHOW -->
+    <section id="slideshow" class="card">
+      <div class="section-head">
+        <h2 class="card__title">Слайд-шоу (по колу)</h2>
+        <p class="muted">Тема може бути: місто / подорожі / балет. Заміни фото в <code>img</code>.</p>
+      </div>
+
+      <div class="slider" aria-label="Слайд-шоу">
+        <div class="slider__viewport" id="sliderViewport">
+          <img class="slide is-active" src="img/slide1.jpg" alt="Слайд 1" loading="lazy" />
+          <img class="slide" src="img/slide2.jpg" alt="Слайд 2" loading="lazy" />
+          <img class="slide" src="img/slide3.jpg" alt="Слайд 3" loading="lazy" />
+        </div>
+
+        <div class="slider__controls">
+          <button class="btn btn--ghost" id="prevBtn" type="button" aria-label="Попередній слайд">←</button>
+          <div class="dots" id="dots" aria-label="Навігація по слайдах"></div>
+          <button class="btn btn--ghost" id="nextBtn" type="button" aria-label="Наступний слайд">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLACE + MAP -->
+    <section id="place" class="grid">
+      <article class="card">
+        <h2 class="card__title">Цікаве про місце, де я живу</h2>
+        <p class="muted">
+          Я живу в Нідерландах. Тут дуже зручно пересуватися велосипедом, багато охайних містечок,
+          а погода часто міняється — тому парасолька майже “must-have”.
+        </p>
+        <p class="muted small">
+          (Можеш переписати під своє місто/район: Харків, Heemskerk тощо — як ти хочеш.)
+        </p>
+      </article>
+
+      <article class="card">
+        <h2 class="card__title">Google карта</h2>
+
+        <!-- Карта: можно оставить Amsterdam, или поменять на свой город.
+             Чтобы поменять: открой Google Maps → Share → Embed a map → скопируй iframe -->
+        <div class="map">
+          <iframe
+            title="Google Map"
+            src="https://www.google.com/maps?q=Amsterdam&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <p class="muted small">
+        Зроблено для навчального завдання • HTML/CSS/JS • GitHub Pages
+      </p>
+    </footer>
+  </main>
 </body>
 </html>
