@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kristina Mozhaieva | Моя особиста сторінка</title>
-  <meta name="description" content="Особиста сторінка: навчання (семестри), улюблені шоу, настрій, слайдер, карта. HTML/CSS/JS." />
+  <title>Kristina Mozhaieva | Personal Website</title>
+  <meta name="description" content="Особиста сторінка Крістіни Можаєвої: навчання, улюблені фільми, настрій, фотогалерея та карта." />
 
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js" defer></script>
@@ -23,230 +23,228 @@
         <a href="#study">Навчання</a>
         <a href="#favorites">Улюблене</a>
         <a href="#moods">Настрій</a>
-        <a href="#slideshow">Слайдер</a>
+        <a href="#slideshow">Фото</a>
         <a href="#place">Карта</a>
       </nav>
 
       <div class="actions">
         <button class="btn btn--ghost" id="themeBtn" type="button" aria-pressed="false">
-          <span class="btn__icon" aria-hidden="true">🌙</span>
           <span id="themeBtnText">Dark</span>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="container">
+  <main>
     <!-- HERO -->
-    <section class="hero" id="about">
-      <div class="card hero__left">
-        <p class="badge">HTML • CSS • JavaScript • GitHub Pages</p>
+    <!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero__bg">
+    <video class="hero__bgVideo" autoplay muted loop playsinline>
+      <source src="video/hero-bg.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__bgOverlay"></div>
+  </div>
 
-        <h1 class="title">Kristina Mozhaieva</h1>
-        <p class="subtitle">
-          Email:
-          <a href="mailto:kristinamozaeva776@gmail.com">kristinamozaeva776@gmail.com</a>
+  <div class="container hero__container">
+    <div class="hero__content reveal">
+      <div class="hero__left">
+        <p class="sectionKicker hero__kicker">Personal Website</p>
+
+        <h1 class="hero__title">Kristina<br />Mozhaieva</h1>
+
+        <p class="hero__lead">
+          Я люблю програмування, красиві інтерфейси, естетику, акуратність і сайти,
+          у яких є настрій, атмосфера та характер.
         </p>
 
-        <div class="split">
-          <div class="mini">
-            <h2 class="h2">3 слова про мене</h2>
-            <ul class="chips">
-              <li class="chip">Наполеглива</li>
-              <li class="chip">Допитлива</li>
-              <li class="chip">Відповідальна</li>
-            </ul>
-          </div>
-
-          <blockquote class="quote">
-            <p>“Your time is limited, so don’t waste it living someone else’s life.”</p>
-            <footer>— Steve Jobs</footer>
-          </blockquote>
+        <div class="hero__chips">
+          <span>Наполеглива</span>
+          <span>Допитлива</span>
+          <span>Відповідальна</span>
         </div>
 
-        <div class="quick">
-          <a class="btn" href="#study">Навчання</a>
-          <a class="btn btn--ghost" href="#favorites">Фільми/шоу</a>
-          <a class="btn btn--ghost" href="#slideshow">Слайдер</a>
+        <div class="hero__links">
+          <a href="mailto:kristinamozaeva776@gmail.com">Email</a>
+          <a href="https://github.com/krikatletka" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/kristina-mozhaieva-5092183a5/" target="_blank" rel="noreferrer">LinkedIn</a>
         </div>
-
-        <p class="muted tiny">
-          © <span id="year"></span> • Light/Dark тема збережеться автоматично
-        </p>
       </div>
 
-      <div class="card hero__right">
-        <h2 class="h2">Контакти</h2>
-        <ul class="contactList">
-          <li><strong>Email:</strong> <a href="mailto:kristinamozaeva776@gmail.com">kristinamozaeva776@gmail.com</a></li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/krikatletka" target="_blank" rel="noreferrer">krikatletka</a></li>
-          <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/kristina-mozhaieva-5092183a5/" target="_blank" rel="noreferrer">profile</a></li>
-        </ul>
+      <div class="hero__photoWrap reveal">
+        <div class="hero__photoFrame">
+          <img src="img/me.jpg" alt="Kristina Mozhaieva" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="softBox">
-          <h3 class="h3">Моє хобі</h3>
-          <p class="muted">
-            Балет, навчання, програмування, красиві UI і “щоб усе було акуратно” 💗
+    <div class="container pageFlow">
+      <!-- ABOUT -->
+     
+
+      <!-- STUDY -->
+      <section class="section reveal" id="study">
+        <div class="softSection">
+          <div class="section__head">
+            <div>
+              <p class="sectionKicker">Study</p>
+              <h2 class="sectionTitle">Навчання — семестри</h2>
+              <p class="sectionText">Таблиця предметів із викладачами, оцінками та перемиканням семестрів.</p>
+            </div>
+
+            <div class="segmented" role="group" aria-label="Перемикач семестрів">
+              <button class="segbtn" id="semPrev" type="button" aria-label="Попередній семестр">←</button>
+              <div class="seglabel" id="semLabel">Семестр 1</div>
+              <button class="segbtn" id="semNext" type="button" aria-label="Наступний семестр">→</button>
+            </div>
+          </div>
+
+          <div class="dots" id="semDots" aria-label="Семестри"></div>
+
+          <div class="tableWrap" id="tableWrap" role="region" aria-label="Таблиця предметів" tabindex="0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Дисципліна</th>
+                  <th>Викладач</th>
+                  <th>Бал</th>
+                  <th>ECTS</th>
+                </tr>
+              </thead>
+              <tbody id="studyBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAVORITES -->
+      <section class="cinema section reveal" id="favorites">
+        <div class="cinema__intro">
+          <p class="sectionKicker">Favorites</p>
+          <h2 class="sectionTitle">Улюблені фільми та серіали</h2>
+          <p class="sectionText">
+            Я люблю фільми та серіали не тільки за сюжет, а й за емоції, естетику, стиль і той особливий настрій, який вони залишають після перегляду.
           </p>
         </div>
-      </div>
-    </section>
 
-    <!-- STUDY / SEMESTERS -->
-    <section class="card section" id="study">
-      <div class="section__head">
-        <div>
-          <h2 class="h2">Навчання — семестри</h2>
-          <p class="muted">Перемикається як слайдер. Таблиця будується з JavaScript.</p>
-        </div>
+        
+        <div class="movieGrid" id="favList"></div>
+      </section>
 
-        <div class="segmented" role="group" aria-label="Перемикач семестрів">
-          <button class="segbtn" id="semPrev" type="button" aria-label="Попередній семестр">←</button>
-          <div class="seglabel" id="semLabel">Семестр 1</div>
-          <button class="segbtn" id="semNext" type="button" aria-label="Наступний семестр">→</button>
-        </div>
-      </div>
-
-      <div class="dots" id="semDots" aria-label="Семестри"></div>
-
-      <div class="tableWrap" id="tableWrap" role="region" aria-label="Таблиця предметів" tabindex="0">
-        <table class="table" aria-describedby="study">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Дисципліна</th>
-              <th>Викладач</th>
-              <th>Бал</th>
-              <th>ECTS</th>
-            </tr>
-          </thead>
-          <tbody id="studyBody"></tbody>
-        </table>
-      </div>
-
-      <p class="muted tiny">
-        Якщо десь не співпадають бали — ти просто скинеш точні значення, і я за 1 хвилину підставлю.
-      </p>
-    </section>
-
-    <!-- FAVORITES -->
-    <section class="grid section" id="favorites">
-      <div class="card">
-        <h2 class="h2">5 улюблених фільмів / ТВ-шоу</h2>
-        <p class="muted">Натисни на картку — відкриється вікно зі скрінами + кнопка-посилання.</p>
-
-        <div class="favlist" id="favList"></div>
-
-        <p class="muted tiny">
-          Твій список уже доданий: GOT, Stranger Things, The Vampire Diaries, Harry Potter, + 1 тимчасовий (можеш замінити).
-        </p>
-      </div>
-
-      <div class="card">
-        <h2 class="h2">Міні-чек</h2>
-        <ul class="checklist">
-          <li>✅ Дві теми (рожево-фіолетова / чорна)</li>
-          <li>✅ Семестри як слайдер (JS)</li>
-          <li>✅ Слайдер фото (JS)</li>
-          <li>✅ Модалка для фільмів/шоу (JS)</li>
-          <li>✅ Карта</li>
-          <li>✅ Адаптивність</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- MOODS -->
-    <section class="card section" id="moods">
-      <div class="section__head">
-        <div>
-          <h2 class="h2">Я у 3-х настроях</h2>
-          <p class="muted">Фото округлі + підписи. Якщо фото не знайдено — буде красивий фон.</p>
-        </div>
-      </div>
-
-      <div class="moodGrid">
-        <figure class="photoCard">
-          <div class="photo">
-            <img src="img/happy.jpg" alt="Щасливий настрій" loading="lazy" />
+      <!-- MOODS -->
+      <section class="section reveal" id="moods">
+        <div class="softSection">
+          <div class="section__head">
+            <div>
+              <p class="sectionKicker">Mood</p>
+              <h2 class="sectionTitle">Я у різних настроях</h2>
+              <p class="sectionText">Три фото, які передають різний стан і настрій.</p>
+            </div>
           </div>
-          <figcaption>Щаслива</figcaption>
-        </figure>
 
-        <figure class="photoCard">
-          <div class="photo">
-            <img src="img/sad.jpg" alt="Сумний настрій" loading="lazy" />
+          <div class="moodGrid">
+            <figure class="photoCard lift">
+              <div class="photo">
+                <img src="img/happy.jpg" alt="Щасливий настрій" loading="lazy" />
+              </div>
+              <figcaption>
+                <strong>Щаслива</strong>
+                <p class="muted">Легкість, тепло, гарний настрій і відчуття спокою.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="photoCard lift">
+              <div class="photo">
+                <img src="img/sad.jpg" alt="Сумний настрій" loading="lazy" />
+              </div>
+              <figcaption>
+                <strong>Сумна</strong>
+                <p class="muted">Іноді настрій стає більш тихим, задумливим і спокійним.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="photoCard lift">
+              <div class="photo">
+                <img src="img/now.jpg" alt="Мій настрій зараз" loading="lazy" />
+              </div>
+              <figcaption>
+                <strong>Зараз</strong>
+                <p class="muted">Стан, у якому хочеться створювати щось красиве й корисне.</p>
+              </figcaption>
+            </figure>
           </div>
-          <figcaption>Сумна</figcaption>
-        </figure>
+        </div>
+      </section>
 
-        <figure class="photoCard">
-          <div class="photo">
-            <img src="img/now.jpg" alt="Мій настрій зараз" loading="lazy" />
+      <!-- SLIDESHOW -->
+      <section class="section reveal" id="slideshow">
+        <div class="softSection">
+          <div class="section__head">
+            <div>
+              <p class="sectionKicker">Gallery</p>
+              <h2 class="sectionTitle">Фотогалерея</h2>
+              <p class="sectionText">Кілька фотографій, які мені подобаються.</p>
+            </div>
+
+            <div class="sliderBtns">
+              <button class="btn btn--ghost" id="slidePrev" type="button">←</button>
+              <button class="btn btn--ghost" id="slideNext" type="button">→</button>
+            </div>
           </div>
-          <figcaption>Зараз</figcaption>
-        </figure>
-      </div>
-    </section>
 
-    <!-- SLIDESHOW -->
-    <section class="card section" id="slideshow">
-      <div class="section__head">
-        <div>
-          <h2 class="h2">Слайдер фото (по колу)</h2>
-          <p class="muted">Фото в <code>img/slide1.jpg</code>…<code>img/slide4.jpg</code>. Є автопрокрутка.</p>
+          <div class="slider">
+            <div class="slider__viewport" id="sliderViewport">
+              <img class="slide is-active" src="img/slide1.jpg" alt="Слайд 1" loading="lazy" />
+              <img class="slide" src="img/slide2.jpg" alt="Слайд 2" loading="lazy" />
+              <img class="slide" src="img/slide3.jpg" alt="Слайд 3" loading="lazy" />
+              <img class="slide" src="img/slide4.jpg" alt="Слайд 4" loading="lazy" />
+            </div>
+
+            <div class="dots dots--center" id="slideDots" aria-label="Навігація слайдера"></div>
+          </div>
         </div>
+      </section>
 
-        <div class="sliderBtns">
-          <button class="btn btn--ghost" id="slidePrev" type="button">←</button>
-          <button class="btn btn--ghost" id="slideNext" type="button">→</button>
+      <!-- PLACE -->
+      <section class="section reveal" id="place">
+        <div class="grid placeGrid">
+          <div class="softSection">
+            <p class="sectionKicker">Place</p>
+            <h2 class="sectionTitle">Місце, де я живу</h2>
+            <p class="sectionText">
+              Я живу в Нідерландах, і мені подобається поєднання спокійної атмосфери,
+              красивої архітектури, доглянутих вулиць і зручного міського середовища.
+            </p>
+
+            <div class="pillRow">
+              <span class="pill">Netherlands</span>
+              <span class="pill">Amsterdam</span>
+            </div>
+          </div>
+
+          <div class="softSection">
+            <p class="sectionKicker">Map</p>
+            <h2 class="sectionTitle">Google Maps</h2>
+
+            <div class="map">
+              <iframe
+                title="Google Map"
+                src="https://www.google.com/maps?q=Amsterdam&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="slider">
-        <div class="slider__viewport" id="sliderViewport">
-          <img class="slide is-active" src="img/slide1.jpg" alt="Слайд 1" loading="lazy" />
-          <img class="slide" src="img/slide2.jpg" alt="Слайд 2" loading="lazy" />
-          <img class="slide" src="img/slide3.jpg" alt="Слайд 3" loading="lazy" />
-          <img class="slide" src="img/slide4.jpg" alt="Слайд 4" loading="lazy" />
-        </div>
-
-        <div class="dots dots--center" id="slideDots" aria-label="Навігація слайдера"></div>
-      </div>
-
-      <p class="muted tiny">Стрілки клавіатури ← → теж працюють.</p>
-    </section>
-
-    <!-- PLACE -->
-    <section class="grid section" id="place">
-      <div class="card">
-        <h2 class="h2">Цікаве про місце, де я живу</h2>
-        <p class="muted">
-          Амстердам — місто каналів, велосипедів і дуже живої атмосфери. Тут завжди є що подивитися,
-          і майже кожен район має свій характер.
-        </p>
-
-        <div class="pillRow">
-          <span class="pill">Amsterdam</span>
-          <span class="pill">Netherlands</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2 class="h2">Google Map</h2>
-        <div class="map">
-          <iframe
-            title="Google Map"
-            src="https://www.google.com/maps?q=Amsterdam&output=embed"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <p class="muted tiny">Made by Kristina • HTML/CSS/JS • GitHub Pages</p>
-    </footer>
+      <footer class="footer">
+        <p class="muted tiny">Made by Kristina • HTML/CSS/JS • <span id="year"></span></p>
+      </footer>
+    </div>
   </main>
 </body>
 </html>
