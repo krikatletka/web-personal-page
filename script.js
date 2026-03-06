@@ -1,14 +1,18 @@
 // ========================
 // Helpers
 // ========================
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-const clampIndex = (i, len) => (i % len + len) % len;
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+function clampIndex(index, length) {
+  return (index % length + length) % length;
+}
 
 // ========================
 // Year
 // ========================
 const yearEl = $("#year");
+
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
@@ -22,11 +26,12 @@ const themeBtnText = $("#themeBtnText");
 
 function setTheme(theme) {
   const isDark = theme === "dark";
+
   document.body.classList.toggle("theme-dark", isDark);
   document.body.classList.toggle("theme-light", !isDark);
 
   if (themeBtn) {
-    themeBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
+    themeBtn.setAttribute("aria-pressed", String(isDark));
   }
 
   if (themeBtnText) {
@@ -37,10 +42,15 @@ function setTheme(theme) {
 }
 
 function getInitialTheme() {
-  const saved = localStorage.getItem(THEME_KEY);
-  if (saved === "dark" || saved === "light") return saved;
+  const savedTheme = localStorage.getItem(THEME_KEY);
 
-  const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+  if (savedTheme === "dark" || savedTheme === "light") {
+    return savedTheme;
+  }
+
+  const prefersDark = window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
   return prefersDark ? "dark" : "light";
 }
 
@@ -112,13 +122,13 @@ let semIndex = 0;
 function renderTable(rows) {
   if (!studyBody) return;
 
-  studyBody.innerHTML = rows.map((r, idx) => `
+  studyBody.innerHTML = rows.map((row, index) => `
     <tr>
-      <td>${idx + 1}</td>
-      <td>${r.name}</td>
-      <td>${r.teacher}</td>
-      <td>${r.score}</td>
-      <td>${r.ects}</td>
+      <td>${index + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.teacher}</td>
+      <td>${row.score}</td>
+      <td>${row.ects}</td>
     </tr>
   `).join("");
 }
@@ -127,30 +137,34 @@ function renderSemDots() {
   if (!semDots) return;
 
   semDots.innerHTML = "";
-  semesters.forEach((_, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "dotbtn" + (i === semIndex ? " is-active" : "");
-    b.setAttribute("aria-label", `Семестр ${i + 1}`);
-    b.addEventListener("click", () => showSemester(i));
-    semDots.appendChild(b);
+
+  semesters.forEach((_, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `dotbtn${index === semIndex ? " is-active" : ""}`;
+    button.setAttribute("aria-label", `Семестр ${index + 1}`);
+    button.addEventListener("click", () => showSemester(index));
+    semDots.appendChild(button);
   });
 }
 
-function showSemester(i) {
-  semIndex = clampIndex(i, semesters.length);
+function updateSemDots() {
+  if (!semDots) return;
+
+  $$(".dotbtn", semDots).forEach((dot, index) => {
+    dot.classList.toggle("is-active", index === semIndex);
+  });
+}
+
+function showSemester(index) {
+  semIndex = clampIndex(index, semesters.length);
 
   if (semLabel) {
     semLabel.textContent = semesters[semIndex].label;
   }
 
   renderTable(semesters[semIndex].rows);
-
-  if (semDots) {
-    $$(".dotbtn", semDots).forEach((d, k) => {
-      d.classList.toggle("is-active", k === semIndex);
-    });
-  }
+  updateSemDots();
 }
 
 if (semPrev) {
@@ -181,30 +195,35 @@ function renderSlideDots() {
   if (!slideDots || !slides.length) return;
 
   slideDots.innerHTML = "";
-  slides.forEach((_, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "dotbtn" + (i === slideIndex ? " is-active" : "");
-    b.setAttribute("aria-label", `Слайд ${i + 1}`);
-    b.addEventListener("click", () => showSlide(i));
-    slideDots.appendChild(b);
+
+  slides.forEach((_, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `dotbtn${index === slideIndex ? " is-active" : ""}`;
+    button.setAttribute("aria-label", `Слайд ${index + 1}`);
+    button.addEventListener("click", () => showSlide(index));
+    slideDots.appendChild(button);
   });
 }
 
-function showSlide(i) {
+function updateSlideDots() {
+  if (!slideDots) return;
+
+  $$(".dotbtn", slideDots).forEach((dot, index) => {
+    dot.classList.toggle("is-active", index === slideIndex);
+  });
+}
+
+function showSlide(index) {
   if (!slides.length) return;
 
-  slideIndex = clampIndex(i, slides.length);
+  slideIndex = clampIndex(index, slides.length);
 
-  slides.forEach((s, k) => {
-    s.classList.toggle("is-active", k === slideIndex);
+  slides.forEach((slide, i) => {
+    slide.classList.toggle("is-active", i === slideIndex);
   });
 
-  if (slideDots) {
-    $$(".dotbtn", slideDots).forEach((d, k) => {
-      d.classList.toggle("is-active", k === slideIndex);
-    });
-  }
+  updateSlideDots();
 }
 
 function nextSlide() {
@@ -223,11 +242,16 @@ if (slideNext) {
   slideNext.addEventListener("click", nextSlide);
 }
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", (event) => {
   if (!slides.length) return;
 
-  if (e.key === "ArrowLeft") prevSlide();
-  if (e.key === "ArrowRight") nextSlide();
+  if (event.key === "ArrowLeft") {
+    prevSlide();
+  }
+
+  if (event.key === "ArrowRight") {
+    nextSlide();
+  }
 });
 
 if (slides.length && slideDots) {
@@ -238,8 +262,6 @@ if (slides.length && slideDots) {
 // ========================
 // Reveal on scroll
 // ========================
-const revealItems = document.querySelectorAll(".reveal");
-
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -250,9 +272,13 @@ const revealObserver = new IntersectionObserver((entries) => {
   threshold: 0.18
 });
 
-revealItems.forEach((item) => {
-  revealObserver.observe(item);
-});
+function observeRevealElements(root = document) {
+  $$(".reveal", root).forEach((item) => {
+    revealObserver.observe(item);
+  });
+}
+
+observeRevealElements();
 
 // ========================
 // Favorites + Modal
@@ -322,9 +348,16 @@ const favorites = [
 
 const favList = $("#favList");
 
+function closeModal(modal) {
+  if (!modal) return;
+  modal.remove();
+  document.body.classList.remove("modal-open");
+}
+
 function openModal(item) {
   const modal = document.createElement("div");
   modal.className = "modal";
+
   modal.innerHTML = `
     <div class="modal__backdrop" data-close="1"></div>
     <div class="modal__card" role="dialog" aria-modal="true" aria-label="${item.title}">
@@ -344,7 +377,7 @@ function openModal(item) {
       </div>
 
       <div class="modal__grid">
-        ${item.images.map(src => `
+        ${item.images.map((src) => `
           <div class="modal__img">
             <img src="${src}" alt="${item.title}" loading="lazy">
           </div>
@@ -361,66 +394,86 @@ function openModal(item) {
   document.body.appendChild(modal);
   document.body.classList.add("modal-open");
 
-  const close = () => {
-    modal.remove();
-    document.body.classList.remove("modal-open");
-    document.removeEventListener("keydown", esc);
-  };
-
-  modal.addEventListener("click", (e) => {
-    const t = e.target;
-    if (t && t.dataset && t.dataset.close) {
-      close();
-    }
-  });
-
-  function esc(e) {
-    if (e.key === "Escape") {
-      close();
+  function handleEsc(event) {
+    if (event.key === "Escape") {
+      closeModal(modal);
+      document.removeEventListener("keydown", handleEsc);
     }
   }
 
-  document.addEventListener("keydown", esc);
+  modal.addEventListener("click", (event) => {
+    const target = event.target;
+    if (target instanceof HTMLElement && target.dataset.close) {
+      closeModal(modal);
+      document.removeEventListener("keydown", handleEsc);
+    }
+  });
+
+  document.addEventListener("keydown", handleEsc);
 }
 
-if (favList) {
-  favList.innerHTML = favorites.map((f, index) => `
+function tryPlayMovieVideos(root = document) {
+  const videos = $$(".movieCard__video", root);
+
+  videos.forEach((video) => {
+    const playPromise = video.play();
+
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch((error) => {
+        console.log("Video play error:", video.currentSrc || video.querySelector("source")?.src, error);
+      });
+    }
+  });
+}
+
+function renderFavorites() {
+  if (!favList) return;
+
+  favList.innerHTML = favorites.map((item, index) => `
     <button
       class="movieCard ${index % 3 === 0 ? "movieCard--large" : "movieCard--small"} reveal"
       type="button"
-      data-open="${f.id}"
+      data-open="${item.id}"
     >
       <div class="movieCard__media">
-        <video class="movieCard__video" muted loop playsinline poster="${f.cover}">
-          <source src="${f.previewVideo}" type="video/mp4" />
+        <video
+          class="movieCard__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="${item.cover}"
+        >
+          <source src="${item.previewVideo}" type="video/mp4">
         </video>
         <div class="movieCard__overlay"></div>
       </div>
 
       <div class="movieCard__content">
-        <span class="movieCard__tag">${f.tag}</span>
-        <h3>${f.title}</h3>
-        <p>${f.short}</p>
+        <span class="movieCard__tag">${item.tag}</span>
+        <h3>${item.title}</h3>
+        <p>${item.short}</p>
       </div>
     </button>
   `).join("");
 
-  favList.querySelectorAll("[data-open]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-open");
-      const item = favorites.find((f) => f.id === id);
-      if (item) openModal(item);
+  favList.querySelectorAll("[data-open]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-open");
+      const item = favorites.find((fav) => fav.id === id);
+
+      if (item) {
+        openModal(item);
+      }
     });
   });
-  const movieVideos = $$(".movieCard__video", favList);
 
-  movieVideos.forEach((video) => {
-    video.play().catch(() => {});
-  });
-  document.querySelectorAll(".movieCard.reveal").forEach((item) => {
-    revealObserver.observe(item);
-  });
+  observeRevealElements(favList);
+  tryPlayMovieVideos(favList);
 }
+
+renderFavorites();
 
 // ========================
 // Image fallback
@@ -430,4 +483,3 @@ $$("img").forEach((img) => {
     img.style.opacity = "0";
   }, { once: true });
 });
-
