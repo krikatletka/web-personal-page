@@ -494,7 +494,7 @@ if (burgerBtn && siteNav) {
     burgerBtn.setAttribute("aria-expanded", String(isOpen));
   });
 
-  siteNav.querySelectorAll("a").forEach(link => {
+  siteNav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => {
       siteNav.classList.remove("is-open");
       burgerBtn.setAttribute("aria-expanded", "false");
