@@ -483,3 +483,21 @@ $$("img").forEach((img) => {
     img.style.opacity = "0";
   }, { once: true });
 });
+const burgerBtn = document.getElementById("burgerBtn");
+const siteNav = document.getElementById("siteNav");
+
+if (burgerBtn && siteNav) {
+  burgerBtn.addEventListener("click", () => {
+    siteNav.classList.toggle("is-open");
+
+    const isOpen = siteNav.classList.contains("is-open");
+    burgerBtn.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  siteNav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      siteNav.classList.remove("is-open");
+      burgerBtn.setAttribute("aria-expanded", "false");
+    });
+  });
+}
