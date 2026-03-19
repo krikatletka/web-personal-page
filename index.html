@@ -1,14 +1,22 @@
 <!doctype html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kristina Mozhaieva | Personal Website</title>
-  <meta name="description" content="Особиста сторінка Крістіни Можаєвої: навчання, улюблені фільми, настрій, фотогалерея та карта." />
+  <meta
+    name="description"
+    content="Особиста сторінка Крістіни Можаєвої: навчання, улюблені фільми, настрій, фотогалерея та карта."
+  >
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 
@@ -28,76 +36,90 @@
         <a href="#slideshow">Фото</a>
         <a href="#place">Карта</a>
       </nav>
-<button class="burger" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-expanded="false">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
+
       <div class="actions">
-        <button class="btn btn--ghost" id="themeBtn" type="button" aria-pressed="false">
+        <button
+          class="btn btn--ghost"
+          id="themeBtn"
+          type="button"
+          aria-pressed="false"
+        >
           <span id="themeBtnText">Dark</span>
+        </button>
+
+        <button
+          class="burger"
+          id="burgerBtn"
+          type="button"
+          aria-label="Відкрити меню"
+          aria-expanded="false"
+          aria-controls="siteNav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- HERO   shows-->
     <!-- HERO -->
-<section class="hero" id="about">
-  <div class="hero__bg">
-    <video class="hero__bgVideo" autoplay muted loop playsinline>
-      <source src="video/hero-bg.mp4" type="video/mp4" />
-    </video>
-    <div class="hero__bgOverlay"></div>
-  </div>
-
-  <div class="container hero__container">
-    <div class="hero__content reveal">
-      <div class="hero__left">
-        <p class="sectionKicker hero__kicker">Personal Website</p>
-
-        <h1 class="hero__title">Kristina<br />Mozhaieva</h1>
-
-        <p class="hero__lead">
-          Я люблю програмування, красиві інтерфейси, естетику, акуратність і сайти,
-          у яких є настрій, атмосфера та характер.
-        </p>
-
-        <div class="hero__chips">
-          <span>Наполеглива</span>
-          <span>Допитлива</span>
-          <span>Відповідальна</span>
-        </div>
-
-        <div class="hero__links">
-          <a href="mailto:kristinamozaeva776@gmail.com">Email</a>
-          <a href="https://github.com/krikatletka" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://www.linkedin.com/in/kristina-mozhaieva-5092183a5/" target="_blank" rel="noreferrer">LinkedIn</a>
-        </div>
+    <section class="hero" id="about">
+      <div class="hero__bg" aria-hidden="true">
+        <video class="hero__bgVideo" autoplay muted loop playsinline>
+          <source src="video/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="hero__bgOverlay"></div>
       </div>
 
-      <div class="hero__photoWrap reveal">
-        <div class="hero__photo">
-          <img src="img/me.jpg" alt="Kristina Mozhaieva" loading="lazy" />
+      <div class="container hero__container">
+        <div class="hero__content reveal">
+          <div class="hero__left">
+            <p class="sectionKicker">Personal Website</p>
+
+            <h1 class="hero__title">
+              Kristina<br>Mozhaieva
+            </h1>
+
+            <p class="hero__lead">
+              Я люблю програмування, красиві інтерфейси, естетику, акуратність і сайти,
+              у яких є настрій, атмосфера та характер.
+            </p>
+
+            <ul class="hero__chips" aria-label="Мої якості">
+              <li><span>Наполеглива</span></li>
+              <li><span>Допитлива</span></li>
+              <li><span>Відповідальна</span></li>
+            </ul>
+
+            <div class="hero__links" aria-label="Мої посилання">
+              <a href="mailto:kristinamozaeva776@gmail.com">Email</a>
+              <a href="https://github.com/krikatletka" target="_blank" rel="noreferrer">GitHub</a>
+              <a href="https://www.linkedin.com/in/kristina-mozhaieva-5092183a5/" target="_blank" rel="noreferrer">LinkedIn</a>
+            </div>
+          </div>
+
+          <div class="hero__photoWrap reveal">
+            <figure class="hero__photo">
+              <img src="img/me.jpg" alt="Kristina Mozhaieva" loading="lazy">
+            </figure>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <div class="container pageFlow">
-      <!-- ABOUT -->
-     
-
       <!-- STUDY -->
-      <section class="section reveal" id="study">
+      <section class="section reveal" id="study" aria-labelledby="study-title">
         <div class="softSection">
           <div class="section__head">
             <div>
               <p class="sectionKicker">Study</p>
-              <h2 class="sectionTitle">Навчання — семестри</h2>
-              <p class="sectionText">Таблиця предметів із викладачами, оцінками та перемиканням семестрів.</p>
+              <h2 class="sectionTitle" id="study-title">Навчання — семестри</h2>
+              <p class="sectionText">
+                Таблиця предметів із викладачами, оцінками та перемиканням семестрів.
+              </p>
             </div>
 
             <div class="segmented" role="group" aria-label="Перемикач семестрів">
@@ -109,15 +131,15 @@
 
           <div class="dots" id="semDots" aria-label="Семестри"></div>
 
-          <div class="tableWrap" id="tableWrap" role="region" aria-label="Таблиця предметів" tabindex="0">
+          <div class="tableWrap" role="region" aria-label="Таблиця предметів" tabindex="0">
             <table class="table">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Дисципліна</th>
-                  <th>Викладач</th>
-                  <th>Бал</th>
-                  <th>ECTS</th>
+                  <th scope="col">#</th>
+                  <th scope="col">Дисципліна</th>
+                  <th scope="col">Викладач</th>
+                  <th scope="col">Бал</th>
+                  <th scope="col">ECTS</th>
                 </tr>
               </thead>
               <tbody id="studyBody"></tbody>
@@ -127,26 +149,26 @@
       </section>
 
       <!-- FAVORITES -->
-      <section class="cinema section reveal" id="favorites">
+      <section class="cinema section reveal" id="favorites" aria-labelledby="favorites-title">
         <div class="cinema__intro">
           <p class="sectionKicker">Favorites</p>
-          <h2 class="sectionTitle">Улюблені фільми та серіали</h2>
+          <h2 class="sectionTitle" id="favorites-title">Улюблені фільми та серіали</h2>
           <p class="sectionText">
-            Я люблю фільми та серіали не тільки за сюжет, а й за емоції, естетику, стиль і той особливий настрій, який вони залишають після перегляду.
+            Я люблю фільми та серіали не тільки за сюжет, а й за емоції, естетику,
+            стиль і той особливий настрій, який вони залишають після перегляду.
           </p>
         </div>
 
-        
-        <div class="movieGrid" id="favList"></div>
+        <div class="movieGrid" id="favList" aria-live="polite"></div>
       </section>
 
       <!-- MOODS -->
-      <section class="section reveal" id="moods">
+      <section class="section reveal" id="moods" aria-labelledby="moods-title">
         <div class="softSection">
           <div class="section__head">
             <div>
               <p class="sectionKicker">Mood</p>
-              <h2 class="sectionTitle">Я у різних настроях</h2>
+              <h2 class="sectionTitle" id="moods-title">Я у різних настроях</h2>
               <p class="sectionText">Три фото, які передають різний стан і настрій.</p>
             </div>
           </div>
@@ -154,7 +176,7 @@
           <div class="moodGrid">
             <figure class="photoCard lift">
               <div class="photo">
-                <img src="img/happy.jpg" alt="Щасливий настрій" loading="lazy" />
+                <img src="img/happy.jpg" alt="Щасливий настрій" loading="lazy">
               </div>
               <figcaption>
                 <strong>Щаслива</strong>
@@ -164,7 +186,7 @@
 
             <figure class="photoCard lift">
               <div class="photo">
-                <img src="img/sad.jpg" alt="Сумний настрій" loading="lazy" />
+                <img src="img/sad.jpg" alt="Сумний настрій" loading="lazy">
               </div>
               <figcaption>
                 <strong>Сумна</strong>
@@ -174,7 +196,7 @@
 
             <figure class="photoCard lift">
               <div class="photo">
-                <img src="img/now.jpg" alt="Мій настрій зараз" loading="lazy" />
+                <img src="img/now.jpg" alt="Мій настрій зараз" loading="lazy">
               </div>
               <figcaption>
                 <strong>Зараз</strong>
@@ -186,27 +208,27 @@
       </section>
 
       <!-- SLIDESHOW -->
-      <section class="section reveal" id="slideshow">
+      <section class="section reveal" id="slideshow" aria-labelledby="slideshow-title">
         <div class="softSection">
           <div class="section__head">
             <div>
               <p class="sectionKicker">Gallery</p>
-              <h2 class="sectionTitle">Фотогалерея</h2>
+              <h2 class="sectionTitle" id="slideshow-title">Фотогалерея</h2>
               <p class="sectionText">Кілька фотографій, які мені подобаються.</p>
             </div>
 
-            <div class="sliderBtns">
-              <button class="btn btn--ghost" id="slidePrev" type="button">←</button>
-              <button class="btn btn--ghost" id="slideNext" type="button">→</button>
+            <div class="sliderBtns" role="group" aria-label="Керування слайдером">
+              <button class="btn btn--ghost" id="slidePrev" type="button" aria-label="Попередній слайд">←</button>
+              <button class="btn btn--ghost" id="slideNext" type="button" aria-label="Наступний слайд">→</button>
             </div>
           </div>
 
           <div class="slider">
-            <div class="slider__viewport" id="sliderViewport">
-              <img class="slide is-active" src="img/slide1.jpg" alt="Слайд 1" loading="lazy" />
-              <img class="slide" src="img/slide2.jpg" alt="Слайд 2" loading="lazy" />
-              <img class="slide" src="img/slide3.jpg" alt="Слайд 3" loading="lazy" />
-              <img class="slide" src="img/slide4.jpg" alt="Слайд 4" loading="lazy" />
+            <div class="slider__viewport" id="sliderViewport" aria-live="polite">
+              <img class="slide is-active" src="img/slide1.jpg" alt="Слайд 1" loading="lazy">
+              <img class="slide" src="img/slide2.jpg" alt="Слайд 2" loading="lazy">
+              <img class="slide" src="img/slide3.jpg" alt="Слайд 3" loading="lazy">
+              <img class="slide" src="img/slide4.jpg" alt="Слайд 4" loading="lazy">
             </div>
 
             <div class="dots dots--center" id="slideDots" aria-label="Навігація слайдера"></div>
@@ -215,17 +237,17 @@
       </section>
 
       <!-- PLACE -->
-      <section class="section reveal" id="place">
+      <section class="section reveal" id="place" aria-labelledby="place-title">
         <div class="grid placeGrid">
           <div class="softSection">
             <p class="sectionKicker">Place</p>
-            <h2 class="sectionTitle">Місце, де я живу</h2>
+            <h2 class="sectionTitle" id="place-title">Місце, де я живу</h2>
             <p class="sectionText">
               Я живу в Нідерландах, і мені подобається поєднання спокійної атмосфери,
               красивої архітектури, доглянутих вулиць і зручного міського середовища.
             </p>
 
-            <div class="pillRow">
+            <div class="pillRow" aria-label="Локація">
               <span class="pill">Netherlands</span>
               <span class="pill">Amsterdam</span>
             </div>
@@ -248,7 +270,9 @@
       </section>
 
       <footer class="footer">
-        <p class="muted tiny">Made by Kristina • HTML/CSS/JS • <span id="year"></span></p>
+        <p class="muted tiny">
+          Made by Kristina • HTML/CSS/JS • <span id="year"></span>
+        </p>
       </footer>
     </div>
   </main>

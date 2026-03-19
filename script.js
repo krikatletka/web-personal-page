@@ -2,20 +2,26 @@
 // Helpers
 // ========================
 const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-function clampIndex(index, length) {
-  return (index % length + length) % length;
+const clampIndex = (index, length) => (index % length + length) % length;
+
+function setText(element, value) {
+  if (element) element.textContent = value;
+}
+
+function setPressed(element, value) {
+  if (element) element.setAttribute("aria-pressed", String(value));
+}
+
+function setExpanded(element, value) {
+  if (element) element.setAttribute("aria-expanded", String(value));
 }
 
 // ========================
 // Year
 // ========================
-const yearEl = $("#year");
-
-if (yearEl) {
-  yearEl.textContent = new Date().getFullYear();
-}
+setText($("#year"), new Date().getFullYear());
 
 // ========================
 // Theme
@@ -24,19 +30,14 @@ const THEME_KEY = "km_theme";
 const themeBtn = $("#themeBtn");
 const themeBtnText = $("#themeBtnText");
 
-function setTheme(theme) {
+function applyTheme(theme) {
   const isDark = theme === "dark";
 
   document.body.classList.toggle("theme-dark", isDark);
   document.body.classList.toggle("theme-light", !isDark);
 
-  if (themeBtn) {
-    themeBtn.setAttribute("aria-pressed", String(isDark));
-  }
-
-  if (themeBtnText) {
-    themeBtnText.textContent = isDark ? "Light" : "Dark";
-  }
+  setPressed(themeBtn, isDark);
+  setText(themeBtnText, isDark ? "Light" : "Dark");
 
   localStorage.setItem(THEME_KEY, theme);
 }
@@ -48,20 +49,17 @@ function getInitialTheme() {
     return savedTheme;
   }
 
-  const prefersDark = window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  return prefersDark ? "dark" : "light";
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
-setTheme(getInitialTheme());
+applyTheme(getInitialTheme());
 
-if (themeBtn) {
-  themeBtn.addEventListener("click", () => {
-    const isDark = document.body.classList.contains("theme-dark");
-    setTheme(isDark ? "light" : "dark");
-  });
-}
+themeBtn?.addEventListener("click", () => {
+  const isDark = document.body.classList.contains("theme-dark");
+  applyTheme(isDark ? "light" : "dark");
+});
 
 // ========================
 // Semesters data
@@ -109,6 +107,32 @@ const semesters = [
 ];
 
 // ========================
+// Dots helper
+// ========================
+function renderDots(container, items, activeIndex, ariaLabelPrefix, onClick) {
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  items.forEach((_, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `dotbtn${index === activeIndex ? " is-active" : ""}`;
+    button.setAttribute("aria-label", `${ariaLabelPrefix} ${index + 1}`);
+    button.addEventListener("click", () => onClick(index));
+    container.appendChild(button);
+  });
+}
+
+function updateDots(container, activeIndex) {
+  if (!container) return;
+
+  $$(".dotbtn", container).forEach((dot, index) => {
+    dot.classList.toggle("is-active", index === activeIndex);
+  });
+}
+
+// ========================
 // Semesters slider
 // ========================
 const semPrev = $("#semPrev");
@@ -133,52 +157,26 @@ function renderTable(rows) {
   `).join("");
 }
 
-function renderSemDots() {
-  if (!semDots) return;
-
-  semDots.innerHTML = "";
-
-  semesters.forEach((_, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `dotbtn${index === semIndex ? " is-active" : ""}`;
-    button.setAttribute("aria-label", `Семестр ${index + 1}`);
-    button.addEventListener("click", () => showSemester(index));
-    semDots.appendChild(button);
-  });
-}
-
-function updateSemDots() {
-  if (!semDots) return;
-
-  $$(".dotbtn", semDots).forEach((dot, index) => {
-    dot.classList.toggle("is-active", index === semIndex);
-  });
-}
-
 function showSemester(index) {
   semIndex = clampIndex(index, semesters.length);
+  const semester = semesters[semIndex];
 
-  if (semLabel) {
-    semLabel.textContent = semesters[semIndex].label;
-  }
-
-  renderTable(semesters[semIndex].rows);
-  updateSemDots();
+  setText(semLabel, semester.label);
+  renderTable(semester.rows);
+  updateDots(semDots, semIndex);
 }
 
-if (semPrev) {
-  semPrev.addEventListener("click", () => showSemester(semIndex - 1));
-}
+function initSemesters() {
+  if (!studyBody || !semLabel || !semDots) return;
 
-if (semNext) {
-  semNext.addEventListener("click", () => showSemester(semIndex + 1));
-}
-
-if (studyBody && semLabel && semDots) {
-  renderSemDots();
+  renderDots(semDots, semesters, semIndex, "Семестр", showSemester);
   showSemester(0);
+
+  semPrev?.addEventListener("click", () => showSemester(semIndex - 1));
+  semNext?.addEventListener("click", () => showSemester(semIndex + 1));
 }
+
+initSemesters();
 
 // ========================
 // Photo slider
@@ -191,29 +189,6 @@ const slideDots = $("#slideDots");
 
 let slideIndex = 0;
 
-function renderSlideDots() {
-  if (!slideDots || !slides.length) return;
-
-  slideDots.innerHTML = "";
-
-  slides.forEach((_, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `dotbtn${index === slideIndex ? " is-active" : ""}`;
-    button.setAttribute("aria-label", `Слайд ${index + 1}`);
-    button.addEventListener("click", () => showSlide(index));
-    slideDots.appendChild(button);
-  });
-}
-
-function updateSlideDots() {
-  if (!slideDots) return;
-
-  $$(".dotbtn", slideDots).forEach((dot, index) => {
-    dot.classList.toggle("is-active", index === slideIndex);
-  });
-}
-
 function showSlide(index) {
   if (!slides.length) return;
 
@@ -223,7 +198,7 @@ function showSlide(index) {
     slide.classList.toggle("is-active", i === slideIndex);
   });
 
-  updateSlideDots();
+  updateDots(slideDots, slideIndex);
 }
 
 function nextSlide() {
@@ -234,30 +209,24 @@ function prevSlide() {
   showSlide(slideIndex - 1);
 }
 
-if (slidePrev) {
-  slidePrev.addEventListener("click", prevSlide);
+function initSlider() {
+  if (!slides.length || !slideDots) return;
+
+  renderDots(slideDots, slides, slideIndex, "Слайд", showSlide);
+  showSlide(0);
+
+  slidePrev?.addEventListener("click", prevSlide);
+  slideNext?.addEventListener("click", nextSlide);
 }
 
-if (slideNext) {
-  slideNext.addEventListener("click", nextSlide);
-}
+initSlider();
 
 document.addEventListener("keydown", (event) => {
   if (!slides.length) return;
 
-  if (event.key === "ArrowLeft") {
-    prevSlide();
-  }
-
-  if (event.key === "ArrowRight") {
-    nextSlide();
-  }
+  if (event.key === "ArrowLeft") prevSlide();
+  if (event.key === "ArrowRight") nextSlide();
 });
-
-if (slides.length && slideDots) {
-  renderSlideDots();
-  showSlide(0);
-}
 
 // ========================
 // Reveal on scroll
@@ -268,13 +237,11 @@ const revealObserver = new IntersectionObserver((entries) => {
       entry.target.classList.add("is-visible");
     }
   });
-}, {
-  threshold: 0.18
-});
+}, { threshold: 0.18 });
 
 function observeRevealElements(root = document) {
-  $$(".reveal", root).forEach((item) => {
-    revealObserver.observe(item);
+  $$(".reveal", root).forEach((element) => {
+    revealObserver.observe(element);
   });
 }
 
@@ -348,17 +315,17 @@ const favorites = [
 
 const favList = $("#favList");
 
-function closeModal(modal) {
-  if (!modal) return;
-  modal.remove();
+function closeModal(modal, handleEsc) {
+  modal?.remove();
   document.body.classList.remove("modal-open");
+
+  if (handleEsc) {
+    document.removeEventListener("keydown", handleEsc);
+  }
 }
 
-function openModal(item) {
-  const modal = document.createElement("div");
-  modal.className = "modal";
-
-  modal.innerHTML = `
+function createModalMarkup(item) {
+  return `
     <div class="modal__backdrop" data-close="1"></div>
     <div class="modal__card" role="dialog" aria-modal="true" aria-label="${item.title}">
       <button class="modal__close" type="button" aria-label="Close" data-close="1">✕</button>
@@ -390,35 +357,36 @@ function openModal(item) {
       </div>
     </div>
   `;
+}
 
-  document.body.appendChild(modal);
-  document.body.classList.add("modal-open");
+function openModal(item) {
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = createModalMarkup(item);
 
-  function handleEsc(event) {
+  const handleEsc = (event) => {
     if (event.key === "Escape") {
-      closeModal(modal);
-      document.removeEventListener("keydown", handleEsc);
+      closeModal(modal, handleEsc);
     }
-  }
+  };
 
   modal.addEventListener("click", (event) => {
     const target = event.target;
     if (target instanceof HTMLElement && target.dataset.close) {
-      closeModal(modal);
-      document.removeEventListener("keydown", handleEsc);
+      closeModal(modal, handleEsc);
     }
   });
 
+  document.body.appendChild(modal);
+  document.body.classList.add("modal-open");
   document.addEventListener("keydown", handleEsc);
 }
 
 function tryPlayMovieVideos(root = document) {
-  const videos = $$(".movieCard__video", root);
-
-  videos.forEach((video) => {
+  $$(".movieCard__video", root).forEach((video) => {
     const playPromise = video.play();
 
-    if (playPromise && typeof playPromise.catch === "function") {
+    if (playPromise?.catch) {
       playPromise.catch((error) => {
         console.log("Video play error:", video.currentSrc || video.querySelector("source")?.src, error);
       });
@@ -426,12 +394,12 @@ function tryPlayMovieVideos(root = document) {
   });
 }
 
-function renderFavorites() {
-  if (!favList) return;
+function createFavoriteCard(item, index) {
+  const sizeClass = index % 3 === 0 ? "movieCard--large" : "movieCard--small";
 
-  favList.innerHTML = favorites.map((item, index) => `
+  return `
     <button
-      class="movieCard ${index % 3 === 0 ? "movieCard--large" : "movieCard--small"} reveal"
+      class="movieCard ${sizeClass} reveal"
       type="button"
       data-open="${item.id}"
     >
@@ -456,16 +424,20 @@ function renderFavorites() {
         <p>${item.short}</p>
       </div>
     </button>
-  `).join("");
+  `;
+}
 
-  favList.querySelectorAll("[data-open]").forEach((button) => {
+function renderFavorites() {
+  if (!favList) return;
+
+  favList.innerHTML = favorites.map(createFavoriteCard).join("");
+
+  $$("[data-open]", favList).forEach((button) => {
     button.addEventListener("click", () => {
       const id = button.getAttribute("data-open");
       const item = favorites.find((fav) => fav.id === id);
 
-      if (item) {
-        openModal(item);
-      }
+      if (item) openModal(item);
     });
   });
 
@@ -483,21 +455,31 @@ $$("img").forEach((img) => {
     img.style.opacity = "0";
   }, { once: true });
 });
-const burgerBtn = document.getElementById("burgerBtn");
-const siteNav = document.getElementById("siteNav");
+
+// ========================
+// Burger menu
+// ========================
+const burgerBtn = $("#burgerBtn");
+const siteNav = $("#siteNav");
+
+function closeBurgerMenu() {
+  if (!siteNav || !burgerBtn) return;
+
+  siteNav.classList.remove("is-open");
+  setExpanded(burgerBtn, false);
+}
+
+function toggleBurgerMenu() {
+  if (!siteNav || !burgerBtn) return;
+
+  siteNav.classList.toggle("is-open");
+  setExpanded(burgerBtn, siteNav.classList.contains("is-open"));
+}
 
 if (burgerBtn && siteNav) {
-  burgerBtn.addEventListener("click", () => {
-    siteNav.classList.toggle("is-open");
+  burgerBtn.addEventListener("click", toggleBurgerMenu);
 
-    const isOpen = siteNav.classList.contains("is-open");
-    burgerBtn.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  siteNav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      siteNav.classList.remove("is-open");
-      burgerBtn.setAttribute("aria-expanded", "false");
-    });
+  $$("a", siteNav).forEach((link) => {
+    link.addEventListener("click", closeBurgerMenu);
   });
 }
