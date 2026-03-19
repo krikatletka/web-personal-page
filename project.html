@@ -14,6 +14,7 @@
 
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 
 <body class="theme-light">
@@ -27,7 +28,8 @@
       <nav class="nav" aria-label="Навігація сторінки">
         <a href="index.html">Головна</a>
         <a href="#about-project">Про проєкт</a>
-        <a href="#model">3D модель</a>
+        <a href="#main-model">3D модель</a>
+        <a href="#project-slider">Галерея</a>
       </nav>
 
       <div class="actions">
@@ -39,91 +41,199 @@
         >
           <span id="themeBtnText">Dark</span>
         </button>
+      </div>
     </div>
   </header>
 
   <main class="container pageFlow">
+    <!-- Intro -->
     <section class="section" id="about-project">
       <div class="softSection">
         <p class="sectionKicker">Project</p>
         <h1 class="sectionTitle">Мій улюблений проєкт</h1>
         <p class="sectionText">
           Це окрема сторінка, присвячена одному з моїх улюблених проєктів.
-          Тут я можу показати 3D-модель, посилання на неї та коротко пояснити,
-          чому саме цей проєкт для мене цікавий.
+          Тут я можу показати 3D-модель, коротко розповісти про ідею проєкту
+          та додати окрему галерею нижче.
         </p>
 
         <div class="pillRow" aria-label="Інформація про проєкт">
           <span class="pill">3D Model</span>
-          <span class="pill">Sketchfab</span>
+          <span class="pill">Interactive</span>
           <span class="pill">Favorite Project</span>
         </div>
       </div>
     </section>
 
-    <section class="section" id="model">
-      <div class="grid placeGrid">
-        <div class="softSection">
-          <p class="sectionKicker">About</p>
-          <h2 class="sectionTitle">Чому я обрала цей проєкт</h2>
-          <p class="sectionText">
-            Мені подобаються проєкти, у яких поєднуються візуальна привабливість,
-            цікава ідея та сучасна подача. Саме тому я вирішила присвятити цю
-            сторінку 3D-моделі, яку можна переглянути прямо на сайті.
-          </p>
-        </div>
-
-        <div class="softSection">
-          <p class="sectionKicker">Link</p>
-          <h2 class="sectionTitle">Посилання</h2>
-          <p class="sectionText">
-            Якщо вбудована модель не відкривається, її можна переглянути окремо
-            на платформі Sketchfab.
-          </p>
-
-          <div style="margin-top: 18px;">
-            <a
-              class="btn"
-              href="https://sketchfab.com"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Відкрити Sketchfab
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
+    <!-- Main 3D model -->
+    <section class="section" id="main-model">
       <div class="softSection">
         <div class="section__head">
           <div>
             <p class="sectionKicker">Viewer</p>
-            <h2 class="sectionTitle">3D модель</h2>
+            <h2 class="sectionTitle">Головна 3D модель</h2>
             <p class="sectionText">
-              Нижче розміщено вбудовану 3D-модель, яку можна переглядати прямо на сторінці.
+              Нижче розміщено основну 3D-модель, яку можна переглядати прямо на сторінці.
             </p>
           </div>
         </div>
 
         <div class="projectModelWrap">
-          <iframe
+          <model-viewer
             class="projectModel"
-            title="3D Model"
-            frameborder="0"
-            allowfullscreen
-            mozallowfullscreen="true"
-            webkitallowfullscreen="true"
-            src="https://sketchfab.com/models/7w7pAfr6M/embed">
-          </iframe>
+            src="models/my-model.glb"
+            alt="Моя 3D модель"
+            auto-rotate
+            camera-controls
+            touch-action="pan-y"
+            shadow-intensity="1"
+            exposure="1"
+            ar>
+          </model-viewer>
         </div>
       </div>
     </section>
+
+    <!-- Description under model -->
+    <section class="section">
+      <div class="softSection projectDescription">
+        <p class="sectionKicker">Description</p>
+        <h2 class="sectionTitle">Опис проєкту</h2>
+        <p class="sectionText">
+          Цей проєкт мені подобається своєю візуальною подачею, деталями та загальною атмосферою.
+          Особливо цікаво спостерігати за моделлю у 3D-форматі, тому що це дозволяє роздивитися
+          її з різних ракурсів і краще оцінити форму, стиль та композицію.
+        </p>
+
+        <p class="sectionText">
+          Я обрала саме цей формат, тому що він виглядає сучасно, інтерактивно та робить сторінку
+          цікавішою для перегляду.
+        </p>
+      </div>
+    </section>
+
+    <!-- Separate slider block -->
+    <!-- Separate slider block -->
+<section class="section" id="mini-projects">
+  <div class="softSection">
+    <div class="section__head">
+      <div>
+        <p class="sectionKicker">More Projects</p>
+        <h2 class="sectionTitle">Інші 3D проєкти</h2>
+        <p class="sectionText">
+          Тут можна переглянути інші невеликі 3D-проєкти.
+        </p>
+      </div>
+    </div>
+
+    <div class="miniProjectsRow">
+      <button
+        class="miniProjectCard"
+        type="button"
+        data-model="models/project2.glb"
+        data-title="Bloom Project"
+        data-text="Це невеликий 3D-проєкт із драконом, який можна переглядати у деталях у модальному вікні."
+        data-link="project2.html"
+      >
+        <div class="miniProjectThumb">
+          <img src="img/project2.jpg" alt="Bloom Project">
+        </div>
+        <div class="miniProjectInfo">
+          <h3>Bloom Project</h3>
+          <p>Fantasy 3D creature</p>
+        </div>
+      </button>
+
+      <button
+        class="miniProjectCard"
+        type="button"
+        data-model="models/project3.glb"
+        data-title="Judy Hopps Project"
+        data-text="Цей міні-проєкт присвячений 3D-моделі робота, яку можна обертати та роздивлятися з різних боків."
+        data-link="project3.html"
+      >
+        <div class="miniProjectThumb">
+          <img src="img/project3.jpg" alt="Judy Hopps Project">
+        </div>
+        <div class="miniProjectInfo">
+          <h3>Judy Hopps Project</h3>
+          <p>Sci-fi 3D model</p>
+        </div>
+      </button>
+
+      <button
+        class="miniProjectCard"
+        type="button"
+        data-model="models/project4.glb"
+        data-title="Cute Creature  Project"
+        data-text="Тут можна побачити більш атмосферну 3D-модель, яка добре доповнює загальну галерею проєктів."
+        data-link="project4.html"
+      >
+        <div class="miniProjectThumb">
+          <img src="img/project4.jpg" alt="Cute Creature Project">
+        </div>
+        <div class="miniProjectInfo">
+          <h3>Cute Creature</h3>
+          <p>Fantasy environment</p>
+        </div>
+      </button>
+
+      <button
+        class="miniProjectCard"
+        type="button"
+        data-model="models/project5.glb"
+        data-title="Olaf Project"
+        data-text="Експериментальний міні-проєкт із космічним кораблем, який можна використати як окрему роботу у портфоліо."
+        data-link="project5.html"
+      >
+        <div class="miniProjectThumb">
+          <img src="img/project5.jpg" alt="Olaf Project">
+        </div>
+        <div class="miniProjectInfo">
+          <h3>Olaf Project</h3>
+          <p>Futuristic 3D ship</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
 
     <footer class="footer">
       <p class="muted tiny">Project page • Kristina Mozhaieva</p>
     </footer>
   </main>
+  <div class="projectModal" id="projectModal" aria-hidden="true">
+  <div class="projectModal__overlay" id="projectModalOverlay"></div>
+
+  <div class="projectModal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="projectModal__close" id="projectModalClose" type="button" aria-label="Закрити">
+      ×
+    </button>
+
+    <div class="projectModal__grid">
+      <div class="projectModal__viewer">
+        <model-viewer
+          id="modalModelViewer"
+          src=""
+          alt="3D model"
+          auto-rotate
+          camera-controls
+          touch-action="pan-y"
+          shadow-intensity="1"
+          interaction-prompt="none">
+        </model-viewer>
+      </div>
+
+      <div class="projectModal__content">
+        <p class="sectionKicker">Mini Project</p>
+        <h3 class="projectModal__title" id="modalTitle">Назва проєкту</h3>
+        <p class="projectModal__text" id="modalText">
+          Опис проєкту буде тут.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

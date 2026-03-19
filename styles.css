@@ -301,14 +301,14 @@ body::after {
 }
 
 .btn--ghost {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--text);
+  border: 1px solid var(--border);
   box-shadow: none;
 }
 
 .btn--ghost:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.28);
 }
 
 /* segmented controls */
@@ -422,7 +422,7 @@ body::after {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #fff;
+  color: var(--text);
   font-weight: 700;
 }
 
@@ -439,7 +439,7 @@ body::after {
 
 .brand__text {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--text);
 }
 
 .nav {
@@ -452,7 +452,7 @@ body::after {
 .nav a {
   padding: 8px 12px;
   border-radius: 999px;
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--text);
   transition:
     background var(--transition),
     color var(--transition),
@@ -460,8 +460,8 @@ body::after {
 }
 
 .nav a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--text);
   transform: translateY(-1px);
 }
 
@@ -1153,11 +1153,13 @@ body::after {
   padding: 0;
 }
 
+
 /* =========================
    19. PROJECT PAGE
 ========================= */
 
 .projectModelWrap {
+  width: 100%;
   margin-top: 22px;
   overflow: hidden;
   border-radius: 24px;
@@ -1173,12 +1175,209 @@ body::after {
   border: none;
 }
 
+.miniProjectsRow {
+  margin-top: 24px;
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.miniProjectsRow::-webkit-scrollbar {
+  display: none;
+}
+
+.miniProjectCard {
+  min-width: 280px;
+  max-width: 280px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.miniProjectCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.miniProjectThumb {
+  height: 210px;
+  background: linear-gradient(135deg, rgba(12, 12, 20, 1), rgba(4, 4, 10, 1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.miniProjectInfo {
+  padding: 18px;
+}
+
+.miniProjectInfo h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.miniProjectInfo p {
+  margin: 0;
+  opacity: 0.82;
+}
+
+.projectModal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.projectModal.is-open {
+  display: flex;
+}
+
+.projectModal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 7, 12, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.projectModal__dialog {
+  position: relative;
+  width: min(1100px, calc(100% - 32px));
+  max-height: calc(100vh - 40px);
+  margin: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(24, 24, 38, 0.98), rgba(14, 14, 24, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.projectModal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.projectModal__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  min-height: 620px;
+}
+
+.projectModal__viewer {
+  background: radial-gradient(circle at center, rgba(45, 45, 68, 0.55), rgba(6, 6, 12, 1));
+}
+
+.projectModal__viewer model-viewer {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+  display: block;
+}
+
+.projectModal__content {
+  padding: 72px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.projectModal__title {
+  margin: 0 0 18px;
+  font-size: 38px;
+  line-height: 1.1;
+}
+
+.projectModal__text {
+  margin: 0 0 24px;
+  line-height: 1.7;
+  opacity: 0.9;
+  font-size: 18px;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .projectModal__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projectModal__viewer model-viewer {
+    min-height: 320px;
+    height: 320px;
+  }
+
+  .projectModal__content {
+    padding: 28px 20px 24px;
+  }
+
+  .projectModal__title {
+    font-size: 30px;
+  }
+}
+
 @media (max-width: 760px) {
   .projectModel {
     height: 320px;
   }
+
+  .miniProjectCard {
+    min-width: 240px;
+    max-width: 240px;
+  }
+
+  .miniProjectThumb {
+    height: 180px;
+    font-size: 20px;
+  }
+
+  .miniProjectInfo h3 {
+    font-size: 20px;
+  }
 }
 
-.brand {
-color:#fff;
+.miniProjectThumb {
+  height: 210px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(12, 12, 20, 1), rgba(4, 4, 10, 1));
+}
+
+.miniProjectThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.miniProjectCard:hover .miniProjectThumb img {
+  transform: scale(1.06);
 }

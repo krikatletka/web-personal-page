@@ -7,15 +7,21 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const clampIndex = (index, length) => (index % length + length) % length;
 
 function setText(element, value) {
-  if (element) element.textContent = value;
+  if (element) {
+    element.textContent = value;
+  }
 }
 
 function setPressed(element, value) {
-  if (element) element.setAttribute("aria-pressed", String(value));
+  if (element) {
+    element.setAttribute("aria-pressed", String(value));
+  }
 }
 
 function setExpanded(element, value) {
-  if (element) element.setAttribute("aria-expanded", String(value));
+  if (element) {
+    element.setAttribute("aria-expanded", String(value));
+  }
 }
 
 // ========================
@@ -220,13 +226,6 @@ function initSlider() {
 }
 
 initSlider();
-
-document.addEventListener("keydown", (event) => {
-  if (!slides.length) return;
-
-  if (event.key === "ArrowLeft") prevSlide();
-  if (event.key === "ArrowRight") nextSlide();
-});
 
 // ========================
 // Reveal on scroll
@@ -437,7 +436,9 @@ function renderFavorites() {
       const id = button.getAttribute("data-open");
       const item = favorites.find((fav) => fav.id === id);
 
-      if (item) openModal(item);
+      if (item) {
+        openModal(item);
+      }
     });
   });
 
@@ -483,3 +484,72 @@ if (burgerBtn && siteNav) {
     link.addEventListener("click", closeBurgerMenu);
   });
 }
+
+// ========================
+// 3D Mini Projects Modal
+// ========================
+const projectModal = $("#projectModal");
+const projectModalOverlay = $("#projectModalOverlay");
+const projectModalClose = $("#projectModalClose");
+const modalModelViewer = $("#modalModelViewer");
+const modalTitle = $("#modalTitle");
+const modalText = $("#modalText");
+const modalProjectLink = $("#modalProjectLink");
+const miniProjectCards = $$(".miniProjectCard");
+
+function openProjectModal(card) {
+  if (!projectModal) return;
+
+  const model = card.dataset.model || "";
+  const title = card.dataset.title || "Mini Project";
+  const text = card.dataset.text || "Опис проєкту";
+  const link = card.dataset.link || "#";
+
+  if (modalModelViewer) {
+    modalModelViewer.setAttribute("src", model);
+  }
+
+  setText(modalTitle, title);
+  setText(modalText, text);
+
+  if (modalProjectLink) {
+    modalProjectLink.setAttribute("href", link);
+  }
+
+  projectModal.classList.add("is-open");
+  projectModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+function closeProjectModal() {
+  if (!projectModal) return;
+
+  projectModal.classList.remove("is-open");
+  projectModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+}
+
+miniProjectCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    openProjectModal(card);
+  });
+});
+
+projectModalClose?.addEventListener("click", closeProjectModal);
+projectModalOverlay?.addEventListener("click", closeProjectModal);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeProjectModal();
+  }
+
+  if (!slides.length) return;
+
+  if (event.key === "ArrowLeft") {
+    prevSlide();
+  }
+
+  if (event.key === "ArrowRight") {
+    nextSlide();
+  }
+});
