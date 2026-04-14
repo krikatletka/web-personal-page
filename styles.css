@@ -1809,10 +1809,13 @@ body.modal-open {
   z-index: 0;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.5s ease;
   overflow: hidden;
+  transition: opacity 0.6s ease;
 }
 
+.theme-dark.music-playing .musicVisual {
+  opacity: 1;
+}
 .musicVisual__video,
 .musicVisual__gif {
   width: 100%;
@@ -1821,24 +1824,19 @@ body.modal-open {
   filter: blur(8px) saturate(1.1);
   transform: scale(1.08);
   opacity: 0.38;
-}
-
-.musicVisual__overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(rgba(10, 10, 20, 0.45), rgba(10, 10, 20, 0.55));
-}
-
-body.music-playing .musicVisual {
-  opacity: 1;
-}
-
-body.music-playing .musicVisual__video,
-body.music-playing .musicVisual__gif {
   animation: musicFloat 8s ease-in-out infinite;
 }
+/* светлая тема — сильнее blur */
+.theme-light .musicVisual__video,
+.theme-light .musicVisual__gif {
+  filter: blur(8px) saturate(1.1) brightness(2.25);
+}
 
+/* тёмная тема — почти без blur и ярче */
+.theme-dark .musicVisual__video,
+.theme-dark .musicVisual__gif {
+  filter: blur(8px) saturate(1.2) brightness(1.15);
+}
 @keyframes musicFloat {
   0% {
     transform: scale(1.08) translate3d(0, 0, 0);
@@ -1864,5 +1862,13 @@ main,
 .musicVisual__gif,
 .musicVisual__overlay {
   pointer-events: none !important;
+}
+
+.theme-light .musicVisual {
+  display: none;
+}
+
+.theme-dark .musicVisual__overlay {
+  background: linear-gradient(rgba(10,10,20,0.25), rgba(10,10,20,0.35));
 }
 
