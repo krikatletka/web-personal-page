@@ -670,6 +670,37 @@ body::after {
 .hero__photo img {
   border-radius: 22px;
 }
+@media (max-width: 760px) {
+  .nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 120;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgba(18, 18, 24, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav.is-open {
+    display: flex;
+  }
+
+  body.theme-light .nav.is-open a {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  body.theme-light .nav.is-open a:hover {
+    color: #ffffff;
+  }
+}
 
 /* =========================
    8. TABLE / STUDY
@@ -1819,7 +1850,7 @@ body.music-playing .musicVisual__gif {
     transform: scale(1.08) translate3d(0, 0, 0);
   }
 }
-.topbar,
+
 main,
 .pageFlow,
 .section,
@@ -1828,10 +1859,10 @@ main,
   position: relative;
   z-index: 1;
 }
-
 .musicVisual,
 .musicVisual__video,
 .musicVisual__gif,
 .musicVisual__overlay {
   pointer-events: none !important;
 }
+
