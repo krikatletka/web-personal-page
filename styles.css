@@ -1824,9 +1824,14 @@ main,
 .pageFlow,
 .section,
 .softSection,
-.introBlock,
-.modal,
-.projectModal {
+.introBlock {
   position: relative;
   z-index: 1;
+}
+
+.musicVisual,
+.musicVisual__video,
+.musicVisual__gif,
+.musicVisual__overlay {
+  pointer-events: none !important;
 }
