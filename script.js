@@ -676,12 +676,14 @@ async function togglePlayPause() {
     try {
       await audioPlayer.play();
       setText(playPauseBtn, "❚❚");
+      syncMusicVisualState();
     } catch (error) {
       console.error("Playback error:", error);
     }
   } else {
     audioPlayer.pause();
     setText(playPauseBtn, "▶");
+    syncMusicVisualState();
   }
 }
 
@@ -693,6 +695,7 @@ async function playNextTrack() {
 
   try {
     await audioPlayer.play();
+    syncMusicVisualState();
     setText(playPauseBtn, "❚❚");
   } catch (error) {
     console.error("Playback error:", error);
@@ -707,6 +710,7 @@ async function playPrevTrack() {
 
   try {
     await audioPlayer.play();
+    syncMusicVisualState();
     setText(playPauseBtn, "❚❚");
   } catch (error) {
     console.error("Playback error:", error);
@@ -786,6 +790,9 @@ if (
   audioPlayer.addEventListener("loadedmetadata", updateProgress);
 
   musicProgress.addEventListener("input", setProgress);
+  audioPlayer.addEventListener("play", syncMusicVisualState);
+audioPlayer.addEventListener("pause", syncMusicVisualState);
+audioPlayer.addEventListener("ended", syncMusicVisualState);
 }
 const headerMusicBtn = $("#headerMusicBtn");
 async function toggleHeaderMusic() {
@@ -845,4 +852,9 @@ function getSavedMusicState() {
     console.error("Music state parse error:", error);
     return null;
   }
+}
+function syncMusicVisualState() {
+  if (!audioPlayer) return;
+
+  document.body.classList.toggle("music-playing", !audioPlayer.paused);
 }
