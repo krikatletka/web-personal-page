@@ -18,6 +18,7 @@
 
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
+  
 </head>
 
 <body class="theme-light">
@@ -36,6 +37,7 @@
         <a href="#favorites">Улюблене</a>
         <a href="#moods">Настрій</a>
         <a href="#slideshow">Фото</a>
+        <a href=#music>Музика</a>
         <a href="#place">Карта</a>
         <a href="project.html">Проект</a>
       </nav>
@@ -62,6 +64,9 @@
           <span></span>
           <span></span>
         </button>
+        <button class="btn btn--ghost" id="headerMusicBtn" type="button" aria-pressed="false">
+  Music
+</button>
       </div>
     </div>
   </header>
@@ -238,6 +243,72 @@
           </div>
         </div>
       </section>
+      <!-- MUSIC -->
+       <section class="section reveal" id="music" aria-labelledby="music-title">
+  <div class="softSection">
+    <div class="section__head">
+      <div>
+        <p class="sectionKicker">Music</p>
+        <h2 class="sectionTitle" id="music-title">Улюблена музика</h2>
+        <p class="sectionText">
+          Тут можна увімкнути мої улюблені треки, перегортати їх і слухати музику прямо на сайті.
+        </p>
+      </div>
+    </div>
+
+    <div class="musicPlayer">
+      <div class="musicPlayer__main">
+        <div class="musicPlayer__coverWrap">
+          <img
+            class="musicPlayer__cover"
+            id="musicCover"
+            src="img/music/cover1.jpg"
+            alt="Album cover"
+          >
+        </div>
+
+        <div class="musicPlayer__body">
+          <div class="musicPlayer__top">
+            <div>
+              <p class="musicPlayer__label">Now playing</p>
+              <h3 class="musicPlayer__title" id="musicTitle">Track title</h3>
+              <p class="musicPlayer__artist" id="musicArtist">Artist name</p>
+            </div>
+          </div>
+
+          <div class="musicPlayer__progressBlock">
+            <input
+              class="musicPlayer__progress"
+              id="musicProgress"
+              type="range"
+              min="0"
+              max="100"
+              value="0"
+              step="1"
+              aria-label="Music progress"
+            >
+
+            <div class="musicPlayer__time">
+              <span id="currentTime">0:00</span>
+              <span id="durationTime">0:00</span>
+            </div>
+          </div>
+
+          <div class="musicPlayer__controls">
+            <button class="musicControl musicControl--ghost" id="prevTrack" type="button" aria-label="Previous track">⏮</button>
+            <button class="musicControl musicControl--play" id="playPauseBtn" type="button" aria-label="Play or pause">▶</button>
+            <button class="musicControl musicControl--ghost" id="nextTrack" type="button" aria-label="Next track">⏭</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="musicQueue" id="musicList"></div>
+
+      <audio id="audioPlayer"></audio>
+    </div>
+  </div>
+</section>
+
 
       <!-- PLACE -->
       <section class="section reveal" id="place" aria-labelledby="place-title">
@@ -245,14 +316,34 @@
           <div class="softSection">
             <p class="sectionKicker">Place</p>
             <h2 class="sectionTitle" id="place-title">Цікаві факти про місце, де я живу</h2>
-            <p class="sectionText">
-Амстердам — столиця Нідерландів, відома своїми каналами, які входять до списку
-Світової спадщини ЮНЕСКО. У місті понад 100 км каналів і більше ніж 1500 мостів.
-Також Амстердам вважається одним із найвелосипедніших міст світу — тут більше
-велосипедів, ніж жителів. Місто славиться своєю історичною архітектурою,
-музеями світового рівня та відкритою культурою.
-</p>
+            <div class="factList">
 
+  <div class="factItem">
+    <span class="factIcon">🚲</span>
+    <p>В Амстердамі більше велосипедів, ніж жителів.</p>
+  </div>
+
+  <div class="factItem">
+    <span class="factIcon">🌉</span>
+    <p>У місті понад <strong>1500 мостів</strong>.</p>
+  </div>
+
+  <div class="factItem">
+    <span class="factIcon">🏛</span>
+    <p>Тут знаходиться знаменитий музей <strong>Rijksmuseum</strong>.</p>
+  </div>
+
+  <div class="factItem">
+    <span class="factIcon">🏠</span>
+    <p>Багато будинків стоять на <strong>дерев'яних палях</strong>.</p>
+  </div>
+
+  <div class="factItem">
+    <span class="factIcon">🛶</span>
+    <p>Канали Амстердама входять до списку <strong>Світової спадщини ЮНЕСКО</strong>.</p>
+  </div>
+
+</div>
             <div class="pillRow" aria-label="Локація">
               <span class="pill">Netherlands</span>
               <span class="pill">Amsterdam</span>

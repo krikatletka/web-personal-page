@@ -553,3 +553,296 @@ document.addEventListener("keydown", (event) => {
     nextSlide();
   }
 });
+
+// ========================
+// Music Player
+// ========================
+
+const audioPlayer = $("#audioPlayer");
+const musicTitle = $("#musicTitle");
+const musicArtist = $("#musicArtist");
+const musicCover = $("#musicCover");
+const musicList = $("#musicList");
+const playPauseBtn = $("#playPauseBtn");
+const prevTrackBtn = $("#prevTrack");
+const nextTrackBtn = $("#nextTrack");
+const musicProgress = $("#musicProgress");
+const currentTimeEl = $("#currentTime");
+const durationTimeEl = $("#durationTime");
+const MUSIC_STATE_KEY = "km_music_state";
+
+const tracks = [
+  {
+    title: "Lush Life",
+    artist: "Zara Larsson",
+    src: "music/song1.mp3",
+    cover: "img/music/cover1.jpg"
+  },
+  {
+    title: "All I Need",
+    artist: "Within Temptation",
+    src: "music/song2.mp3",
+    cover: "img/music/cover2.jpg"
+  },
+  {
+    title: "Rolling Back To You",
+    artist: "Adele",
+    src: "music/song3.mp3",
+    cover: "img/music/cover3.jpg"
+  }
+];
+
+let currentTrackIndex = 0;
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds)) return "0:00";
+
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+
+  return `${mins}:${String(secs).padStart(2, "0")}`;
+}
+
+function updateTrackButtons() {
+  $$(".trackBtn", musicList).forEach((button, index) => {
+    button.classList.toggle("is-active", index === currentTrackIndex);
+  });
+}
+
+function loadTrack(index) {
+  const track = tracks[index];
+  if (!track || !audioPlayer) return;
+
+  currentTrackIndex = index;
+  audioPlayer.src = track.src;
+
+  setText(musicTitle, track.title);
+  setText(musicArtist, track.artist);
+
+  if (musicCover) {
+    musicCover.src = track.cover;
+    musicCover.alt = track.title;
+  }
+
+  if (musicProgress) {
+    musicProgress.value = 0;
+  }
+
+  setText(currentTimeEl, "0:00");
+  setText(durationTimeEl, "0:00");
+
+  updateTrackButtons();
+}
+
+function renderTrackList() {
+  if (!musicList) return;
+
+  musicList.innerHTML = tracks.map((track, index) => `
+    <button class="trackBtn${index === currentTrackIndex ? " is-active" : ""}" type="button" data-track-index="${index}">
+      <div class="trackBtn__left">
+        <img class="trackBtn__thumb" src="${track.cover}" alt="${track.title}">
+        <div class="trackBtn__meta">
+          <span class="trackBtn__title">${track.title}</span>
+          <span class="trackBtn__artist">${track.artist}</span>
+        </div>
+      </div>
+      <span class="trackBtn__time">♪</span>
+    </button>
+  `).join("");
+
+  $$("[data-track-index]", musicList).forEach((button) => {
+    button.addEventListener("click", async () => {
+      const index = Number(button.dataset.trackIndex);
+      loadTrack(index);
+
+      try {
+        await audioPlayer.play();
+        setText(playPauseBtn, "❚❚");
+      } catch (error) {
+        console.error("Playback error:", error);
+      }
+    });
+  });
+}
+
+async function togglePlayPause() {
+  if (!audioPlayer) return;
+
+  if (!audioPlayer.src) {
+    loadTrack(currentTrackIndex);
+  }
+
+  if (audioPlayer.paused) {
+    try {
+      await audioPlayer.play();
+      setText(playPauseBtn, "❚❚");
+    } catch (error) {
+      console.error("Playback error:", error);
+    }
+  } else {
+    audioPlayer.pause();
+    setText(playPauseBtn, "▶");
+  }
+}
+
+async function playNextTrack() {
+  if (!audioPlayer) return;
+
+  const nextIndex = (currentTrackIndex + 1) % tracks.length;
+  loadTrack(nextIndex);
+
+  try {
+    await audioPlayer.play();
+    setText(playPauseBtn, "❚❚");
+  } catch (error) {
+    console.error("Playback error:", error);
+  }
+}
+
+async function playPrevTrack() {
+  if (!audioPlayer) return;
+
+  const prevIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+  loadTrack(prevIndex);
+
+  try {
+    await audioPlayer.play();
+    setText(playPauseBtn, "❚❚");
+  } catch (error) {
+    console.error("Playback error:", error);
+  }
+}
+
+function updateProgress() {
+  if (!audioPlayer || !musicProgress) return;
+  if (!audioPlayer.duration) return;
+
+  const value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+  musicProgress.value = value;
+
+  setText(currentTimeEl, formatTime(audioPlayer.currentTime));
+  setText(durationTimeEl, formatTime(audioPlayer.duration));
+}
+
+function setProgress() {
+  if (!audioPlayer || !musicProgress || !audioPlayer.duration) return;
+
+  const nextTime = (musicProgress.value / 100) * audioPlayer.duration;
+  audioPlayer.currentTime = nextTime;
+}
+
+if (
+  audioPlayer &&
+  musicTitle &&
+  musicArtist &&
+  musicCover &&
+  musicList &&
+  playPauseBtn &&
+  prevTrackBtn &&
+  nextTrackBtn &&
+  musicProgress &&
+  currentTimeEl &&
+  durationTimeEl
+
+) {
+    renderTrackList();
+
+  const savedState = getSavedMusicState();
+
+  if (savedState && Number.isInteger(savedState.trackIndex) && tracks[savedState.trackIndex]) {
+    currentTrackIndex = savedState.trackIndex;
+    loadTrack(currentTrackIndex);
+
+    audioPlayer.addEventListener("loadedmetadata", async function restoreAfterLoad() {
+      audioPlayer.currentTime = savedState.currentTime || 0;
+
+      if (savedState.isPlaying) {
+        try {
+          await audioPlayer.play();
+          setText(playPauseBtn, "❚❚");
+        } catch (error) {
+          console.error("Resume playback error:", error);
+        }
+      }
+
+      audioPlayer.removeEventListener("loadedmetadata", restoreAfterLoad);
+    });
+  } else {
+    loadTrack(currentTrackIndex);
+  }
+   audioPlayer.addEventListener("timeupdate", saveMusicState);
+  audioPlayer.addEventListener("play", saveMusicState);
+  audioPlayer.addEventListener("pause", saveMusicState);
+  audioPlayer.addEventListener("ended", saveMusicState);
+
+  window.addEventListener("beforeunload", saveMusicState);
+
+  playPauseBtn.addEventListener("click", togglePlayPause);
+  nextTrackBtn.addEventListener("click", playNextTrack);
+  prevTrackBtn.addEventListener("click", playPrevTrack);
+
+  audioPlayer.addEventListener("ended", playNextTrack);
+  audioPlayer.addEventListener("timeupdate", updateProgress);
+  audioPlayer.addEventListener("loadedmetadata", updateProgress);
+
+  musicProgress.addEventListener("input", setProgress);
+}
+const headerMusicBtn = $("#headerMusicBtn");
+async function toggleHeaderMusic() {
+  if (!audioPlayer) return;
+
+  if (!audioPlayer.src) {
+    loadTrack(currentTrackIndex);
+  }
+
+  if (audioPlayer.paused) {
+    try {
+      await audioPlayer.play();
+      setText(playPauseBtn, "❚❚");
+      setText(headerMusicBtn, "Pause");
+      setPressed(headerMusicBtn, true);
+    } catch (error) {
+      console.error("Playback error:", error);
+    }
+  } else {
+    audioPlayer.pause();
+    setText(playPauseBtn, "▶");
+    setText(headerMusicBtn, "Music");
+    setPressed(headerMusicBtn, false);
+  }
+}
+if (headerMusicBtn) {
+  headerMusicBtn.addEventListener("click", toggleHeaderMusic);
+}
+
+audioPlayer?.addEventListener("play", () => {
+  setText(headerMusicBtn, "Pause");
+  setPressed(headerMusicBtn, true);
+});
+
+audioPlayer?.addEventListener("pause", () => {
+  setText(headerMusicBtn, "Music");
+  setPressed(headerMusicBtn, false);
+});
+
+function saveMusicState() {
+  if (!audioPlayer) return;
+
+  const state = {
+    trackIndex: currentTrackIndex,
+    currentTime: audioPlayer.currentTime || 0,
+    isPlaying: !audioPlayer.paused
+  };
+
+  localStorage.setItem(MUSIC_STATE_KEY, JSON.stringify(state));
+}
+
+function getSavedMusicState() {
+  try {
+    const raw = localStorage.getItem(MUSIC_STATE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    console.error("Music state parse error:", error);
+    return null;
+  }
+}
