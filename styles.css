@@ -587,12 +587,6 @@ body::after {
   color: rgba(255, 255, 255, 0.88);
 }
 
-.hero__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 28px;
-}
 
 .hero__chips span,
 .hero__links a,
@@ -1318,6 +1312,7 @@ body::after {
 
 .miniProjectThumb {
   height: 210px;
+  overflow: hidden;
   background: linear-gradient(135deg, rgba(12, 12, 20, 1), rgba(4, 4, 10, 1));
   display: flex;
   align-items: center;
@@ -1445,10 +1440,6 @@ body::after {
   font-size: 18px;
 }
 
-body.modal-open {
-  overflow: hidden;
-}
-
 @media (max-width: 900px) {
   .projectModal__grid {
     grid-template-columns: 1fr;
@@ -1486,12 +1477,6 @@ body.modal-open {
   .miniProjectInfo h3 {
     font-size: 20px;
   }
-}
-
-.miniProjectThumb {
-  height: 210px;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(12, 12, 20, 1), rgba(4, 4, 10, 1));
 }
 
 .miniProjectThumb img {
