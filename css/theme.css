@@ -1,0 +1,62 @@
+/* =========================
+   TOKENS / THEME
+========================= */
+
+:root {
+  --container: 1280px;
+
+  --radius-xl: 34px;
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 14px;
+
+  --transition: 0.3s ease;
+}
+
+.theme-light {
+  --bg:
+    radial-gradient(circle at 12% 18%, rgba(255, 205, 225, 0.48), transparent 24%),
+    radial-gradient(circle at 84% 14%, rgba(214, 220, 255, 0.42), transparent 22%),
+    radial-gradient(circle at 75% 78%, rgba(242, 220, 255, 0.34), transparent 20%),
+    linear-gradient(180deg, #f8f4f8 0%, #f2eef5 100%);
+  --text: #1f1a24;
+  --muted: #675f70;
+  --card: rgba(255, 255, 255, 0.62);
+  --card-strong: rgba(255, 255, 255, 0.78);
+  --border: rgba(100, 82, 124, 0.12);
+  --accent: #b67daa;
+  --accent-2: #8e8fda;
+  --shadow: 0 18px 45px rgba(88, 68, 105, 0.12);
+  --shadow-soft: 0 14px 30px rgba(70, 55, 85, 0.08);
+  --topbar: rgba(255, 255, 255, 0.52);
+  --pill-bg: rgba(255, 255, 255, 0.72);
+  --cinema-bg:
+    linear-gradient(rgba(14, 13, 18, 0.55), rgba(14, 13, 18, 0.75)),
+    url("img/cinema-fallback.jpg") center/cover no-repeat;
+  --button-soft: rgba(255, 255, 255, 0.82);
+  --button-soft-hover: rgba(255, 255, 255, 0.95);
+}
+
+.theme-dark {
+  --bg:
+    radial-gradient(circle at 12% 18%, rgba(182, 125, 170, 0.15), transparent 24%),
+    radial-gradient(circle at 84% 14%, rgba(142, 143, 218, 0.12), transparent 22%),
+    radial-gradient(circle at 75% 78%, rgba(180, 180, 255, 0.09), transparent 20%),
+    linear-gradient(180deg, #101017 0%, #15131c 100%);
+  --text: #f4f1f7;
+  --muted: #b9b2c2;
+  --card: rgba(28, 27, 36, 0.56);
+  --card-strong: rgba(32, 31, 42, 0.76);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #e0b7d4;
+  --accent-2: #acb0ff;
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.26);
+  --shadow-soft: 0 14px 30px rgba(0, 0, 0, 0.18);
+  --topbar: rgba(18, 18, 24, 0.5);
+  --pill-bg: rgba(255, 255, 255, 0.05);
+  --cinema-bg:
+    linear-gradient(rgba(10, 10, 14, 0.62), rgba(10, 10, 14, 0.82)),
+    url("img/cinema-fallback.jpg") center/cover no-repeat;
+  --button-soft: rgba(40, 39, 52, 0.88);
+  --button-soft-hover: rgba(58, 56, 74, 0.95);
+}

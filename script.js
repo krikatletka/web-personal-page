@@ -24,14 +24,12 @@ function setExpanded(element, value) {
   }
 }
 
-// ========================
+
 // Year
-// ========================
+
 setText($("#year"), new Date().getFullYear());
 
-// ========================
 // Theme
-// ========================
 const THEME_KEY = "km_theme";
 const themeBtn = $("#themeBtn");
 const themeBtnText = $("#themeBtnText");
@@ -553,6 +551,8 @@ document.addEventListener("keydown", (event) => {
     nextSlide();
   }
 });
+
+
 
 // ========================
 // Music Player

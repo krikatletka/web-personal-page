@@ -1,0 +1,64 @@
+/* =========================
+   RESET / BASE
+========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Inter, Arial, sans-serif;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
+  background-attachment: fixed;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* decorative background blobs */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: -1;
+  opacity: 0.5;
+}
+
+body::before {
+  width: 260px;
+  height: 260px;
+  top: 100px;
+  left: -70px;
+  background: rgba(255, 190, 220, 0.45);
+}
+
+body::after {
+  width: 320px;
+  height: 320px;
+  right: -80px;
+  bottom: 50px;
+  background: rgba(195, 205, 255, 0.35);
+}

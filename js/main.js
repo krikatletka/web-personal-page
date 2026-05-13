@@ -1,0 +1,11 @@
+initYear();
+initTheme();
+initSemesters();
+initSlider();
+observeRevealElements();
+renderFavorites();
+initImageFallback();
+initBurgerMenu();
+initProjectModal();
+initGlobalKeyboardEvents();
+initMusicPlayer();

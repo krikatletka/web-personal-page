@@ -1,0 +1,35 @@
+/* =========================
+   LAYOUT
+========================= */
+
+.container {
+  width: min(var(--container), calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.pageFlow {
+  padding-top: 44px;
+  padding-bottom: 30px;
+}
+
+.section {
+  margin-top: 42px;
+}
+
+.grid {
+  display: grid;
+  gap: 22px;
+}
+
+.placeGrid {
+  grid-template-columns: 1fr 1fr;
+}
+
+main,
+.pageFlow,
+.section,
+.softSection,
+.introBlock {
+  position: relative;
+  z-index: 1;
+}
