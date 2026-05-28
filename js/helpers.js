@@ -3,7 +3,7 @@
 // ========================
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
+//індекс завжди залишався в межах масиву
 const clampIndex = (index, length) => (index % length + length) % length;
 
 function setText(element, value) {

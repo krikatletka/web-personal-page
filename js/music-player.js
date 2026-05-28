@@ -1,10 +1,14 @@
 // ========================
 // Music Player
 // ========================
+// стан музики
 const MUSIC_STATE_KEY = "km_music_state";
+//номер поточного треку в масиві tracks
 let currentTrackIndex = 0;
 
+//функція для форматування часу в хвилини:секунди
 function formatTime(seconds) {
+
   if (!Number.isFinite(seconds)) return "0:00";
 
   const mins = Math.floor(seconds / 60);
@@ -12,7 +16,7 @@ function formatTime(seconds) {
 
   return `${mins}:${String(secs).padStart(2, "0")}`;
 }
-
+//функція для отримання всіх необхідних елементів аудіоплеєра
 function getAudioElements() {
   return {
     audioPlayer: $("#audioPlayer"),
@@ -25,11 +29,13 @@ function getAudioElements() {
     nextTrackBtn: $("#nextTrack"),
     musicProgress: $("#musicProgress"),
     currentTimeEl: $("#currentTime"),
-    durationTimeEl: $("#durationTime"),
+    durationTimeEl: $("#durationTime"),  
     headerMusicBtn: $("#headerMusicBtn")
   };
 }
 
+
+//підсвічуватання активного треку в списку
 function updateTrackButtons() {
   const { musicList } = getAudioElements();
   if (!musicList) return;
@@ -38,7 +44,7 @@ function updateTrackButtons() {
     button.classList.toggle("is-active", index === currentTrackIndex);
   });
 }
-
+//функція для завантаження треку за індексом
 function loadTrack(index) {
   const {
     audioPlayer,
@@ -55,7 +61,7 @@ function loadTrack(index) {
 
   currentTrackIndex = index;
   audioPlayer.src = track.src;
-
+//заповнення інформації про трек у плеєрі
   setText(musicTitle, track.title);
   setText(musicArtist, track.artist);
 
@@ -74,6 +80,7 @@ function loadTrack(index) {
   updateTrackButtons();
 }
 
+//функції для керування відтворенням музики
 function saveMusicState() {
   const { audioPlayer } = getAudioElements();
   if (!audioPlayer) return;
@@ -86,7 +93,7 @@ function saveMusicState() {
 
   localStorage.setItem(MUSIC_STATE_KEY, JSON.stringify(state));
 }
-
+//функція для отримання збереженого стану музики з localStorage
 function getSavedMusicState() {
   try {
     const raw = localStorage.getItem(MUSIC_STATE_KEY);
@@ -96,7 +103,7 @@ function getSavedMusicState() {
     return null;
   }
 }
-
+// функції для оновлення прогресу відтворення, встановлення прогресу за допомогою слайдера та синхронізації стану кнопки в шапці
 function updateProgress() {
   const { audioPlayer, musicProgress, currentTimeEl, durationTimeEl } = getAudioElements();
 
@@ -110,15 +117,17 @@ function updateProgress() {
   setText(durationTimeEl, formatTime(audioPlayer.duration));
 }
 
+//спрацьовує, коли користувач рухає слайдер прогресу музики.
 function setProgress() {
   const { audioPlayer, musicProgress } = getAudioElements();
 
   if (!audioPlayer || !musicProgress || !audioPlayer.duration) return;
 
-  const nextTime = (musicProgress.value / 100) * audioPlayer.duration;
+  const nextTime = (musicProgress.value / 100) * audioPlayer.duration; //переводить відсоток у секунди.
   audioPlayer.currentTime = nextTime;
 }
 
+//функція для синхронізації стану кнопки відтворення в шапці 
 function syncHeaderMusicState() {
   const { audioPlayer, headerMusicBtn, playPauseBtn } = getAudioElements();
   if (!audioPlayer) return;
@@ -133,7 +142,7 @@ function syncHeaderMusicState() {
     setPressed(headerMusicBtn, true);
   }
 }
-
+//створює список кнопок треків
 function renderTrackList() {
   const { musicList, audioPlayer } = getAudioElements();
   if (!musicList || !audioPlayer) return;
@@ -150,7 +159,7 @@ function renderTrackList() {
       <span class="trackBtn__time">♪</span>
     </button>
   `).join("");
-
+//додавання кліків на кожну кнопку треку.
   $$("[data-track-index]", musicList).forEach((button) => {
     button.addEventListener("click", async () => {
       const index = Number(button.dataset.trackIndex);
@@ -165,7 +174,7 @@ function renderTrackList() {
     });
   });
 }
-
+// перемикання між відтворенням та паузою
 async function togglePlayPause() {
   const { audioPlayer } = getAudioElements();
   if (!audioPlayer) return;
@@ -186,7 +195,7 @@ async function togglePlayPause() {
     syncHeaderMusicState();
   }
 }
-
+//функція для відтворення наступного треку
 async function playNextTrack() {
   const { audioPlayer } = getAudioElements();
   if (!audioPlayer) return;
@@ -202,6 +211,7 @@ async function playNextTrack() {
   }
 }
 
+//функція для відтворення попереднього треку
 async function playPrevTrack() {
   const { audioPlayer } = getAudioElements();
   if (!audioPlayer) return;
@@ -217,6 +227,7 @@ async function playPrevTrack() {
   }
 }
 
+// функція для керування кнопкою в шапці, запускати або зупиняти музику
 async function toggleHeaderMusic() {
   const { audioPlayer } = getAudioElements();
   if (!audioPlayer) return;
@@ -237,7 +248,7 @@ async function toggleHeaderMusic() {
     syncHeaderMusicState();
   }
 }
-
+//підключає fon , які залежать від стану музики.
 function initMusicPlayerEffects() {
   const { audioPlayer } = getAudioElements();
   const body = document.body;
@@ -260,6 +271,8 @@ function initMusicPlayerEffects() {
   });
 }
 
+
+//головна функція для ініціалізації музичного плеєра, 
 function initMusicPlayer() {
   const {
     audioPlayer,
@@ -293,9 +306,10 @@ function initMusicPlayer() {
   }
 
   renderTrackList();
-
+//завантаження збереженого стану музики та відновлення його після завантаження метаданих треку
   const savedState = getSavedMusicState();
 
+  // Якщо збережений стан існує і є дійсним, відновлюємо його
   if (savedState && Number.isInteger(savedState.trackIndex) && tracks[savedState.trackIndex]) {
     currentTrackIndex = savedState.trackIndex;
     loadTrack(currentTrackIndex);

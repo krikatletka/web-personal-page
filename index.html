@@ -5,17 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kristina Mozhaieva | Personal Website</title>
   <link rel="icon" type="image/png" href="img/favicon.png">
-  <meta
-    name="description"
-    content="Особиста сторінка Крістіни Можаєвої: навчання, улюблені фільми, настрій, фотогалерея та карта."
-  >
+  <meta name="description" content="Особиста сторінка Крістіни Можаєвої: навчання, улюблені фільми, настрій, фотогалерея та карта.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
@@ -38,7 +32,6 @@
 </head>
 
 <body class="theme-light">
-  
   <header class="topbar" id="top">
     <div class="container topbar__inner">
       <a class="brand" href="#top" aria-label="На початок">
@@ -47,7 +40,6 @@
         </span>
         <span class="brand__text">KM Studio <span class="brand__icon">✦</span></span>
       </a>
-
       <nav class="nav" id="siteNav" aria-label="Навігація">
         <a href="#about">Про мене</a>
         <a href="#study">Навчання</a>
@@ -60,30 +52,18 @@
       </nav>
 
       <div class="actions">
-        <button
-          class="btn btn--ghost"
-          id="themeBtn"
-          type="button"
-          aria-pressed="false"
-        >
+        <button class="btn btn--ghost" id="themeBtn"  type="button" aria-pressed="false">
           <span id="themeBtnText">Dark</span>
         </button>
 
-        <button
-          class="burger"
-          id="burgerBtn"
-          type="button"
-          aria-label="Відкрити меню"
-          aria-expanded="false"
-          aria-controls="siteNav"
-        >
+        <button class="burger" id="burgerBtn" type="button"  aria-label="Відкрити меню"  aria-expanded="false"  aria-controls="siteNav">
           <span></span>
           <span></span>
           <span></span>
         </button>
         <button class="btn btn--ghost" id="headerMusicBtn" type="button" aria-pressed="false">
-  Music
-</button>
+          Music
+        </button>
       </div>
     </div>
   </header>
@@ -262,69 +242,68 @@
       </section>
       <!-- MUSIC -->
        <section class="section reveal" id="music" aria-labelledby="music-title">
-  <div class="softSection">
-    <div class="section__head">
-      <div>
-        <p class="sectionKicker">Music</p>
-        <h2 class="sectionTitle" id="music-title">Улюблена музика</h2>
-        <p class="sectionText">
-          Тут можна увімкнути мої улюблені треки, перегортати їх і слухати музику прямо на сайті.
-        </p>
-      </div>
-    </div>
+          <div class="softSection">
+            <div class="section__head">
+              <div>
+                <p class="sectionKicker">Music</p>
+                <h2 class="sectionTitle" id="music-title">Улюблена музика</h2>
+                <p class="sectionText">
+                  Тут можна увімкнути мої улюблені треки, перегортати їх і слухати музику прямо на сайті.
+                </p>
+              </div>
+            </div>
 
-    <div class="musicPlayer">
-      <div class="musicPlayer__main">
-        <div class="musicPlayer__coverWrap">
-          <img
-            class="musicPlayer__cover"
-            id="musicCover"
-            src="img/music/cover1.jpg"
-            alt="Album cover"
-          >
-        </div>
+            <div class="musicPlayer">
+              <div class="musicPlayer__main">
+                <div class="musicPlayer__coverWrap">
+                  <img
+                    class="musicPlayer__cover"
+                    id="musicCover"
+                    src="img/music/cover1.jpg"
+                    alt="Album cover"
+                  >
+                </div>
 
-        <div class="musicPlayer__body">
-          <div class="musicPlayer__top">
-            <div>
-              <p class="musicPlayer__label">Now playing</p>
-              <h3 class="musicPlayer__title" id="musicTitle">Track title</h3>
-              <p class="musicPlayer__artist" id="musicArtist">Artist name</p>
+                <div class="musicPlayer__body">
+                  <div class="musicPlayer__top">
+                    <div>
+                      <p class="musicPlayer__label">Now playing</p>
+                      <h3 class="musicPlayer__title" id="musicTitle">Track title</h3>
+                      <p class="musicPlayer__artist" id="musicArtist">Artist name</p>
+                    </div>
+                  </div>
+
+                  <div class="musicPlayer__progressBlock">
+                    <input
+                      class="musicPlayer__progress"
+                      id="musicProgress"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="0"
+                      step="1"
+                      aria-label="Music progress"
+                    >
+
+                    <div class="musicPlayer__time">
+                      <span id="currentTime">0:00</span>
+                      <span id="durationTime">0:00</span>
+                    </div>
+                  </div>
+
+                  <div class="musicPlayer__controls">
+                    <button class="musicControl musicControl--ghost" id="prevTrack" type="button" aria-label="Previous track">⏮</button>
+                    <button class="musicControl musicControl--play" id="playPauseBtn" type="button" aria-label="Play or pause">▶</button>
+                    <button class="musicControl musicControl--ghost" id="nextTrack" type="button" aria-label="Next track">⏭</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="musicQueue" id="musicList"></div>
+              <audio id="audioPlayer"></audio>
             </div>
           </div>
-
-          <div class="musicPlayer__progressBlock">
-            <input
-              class="musicPlayer__progress"
-              id="musicProgress"
-              type="range"
-              min="0"
-              max="100"
-              value="0"
-              step="1"
-              aria-label="Music progress"
-            >
-
-            <div class="musicPlayer__time">
-              <span id="currentTime">0:00</span>
-              <span id="durationTime">0:00</span>
-            </div>
-          </div>
-
-          <div class="musicPlayer__controls">
-            <button class="musicControl musicControl--ghost" id="prevTrack" type="button" aria-label="Previous track">⏮</button>
-            <button class="musicControl musicControl--play" id="playPauseBtn" type="button" aria-label="Play or pause">▶</button>
-            <button class="musicControl musicControl--ghost" id="nextTrack" type="button" aria-label="Next track">⏭</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="musicQueue" id="musicList"></div>
-
-      <audio id="audioPlayer"></audio>
-    </div>
-  </div>
-</section>
+        </section>
 
 
       <!-- PLACE -->

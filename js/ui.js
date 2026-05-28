@@ -16,23 +16,17 @@ function applyTheme(theme) {
   const themeBtnText = $("#themeBtnText");
   const isDark = theme === "dark";
 
-  // Перемикаємо CSS-класи теми
   document.body.classList.toggle("theme-dark", isDark);
   document.body.classList.toggle("theme-light", !isDark);
 
-  // Оновлюємо стан кнопки і текст
   setPressed(themeBtn, isDark);
   setText(themeBtnText, isDark ? "Light" : "Dark");
 
-  // Зберігаємо тему в пам’яті браузера
   localStorage.setItem(THEME_KEY, theme);
 }
 
-// Повертає тему при завантаженні сторінки
 function getInitialTheme() {
   const savedTheme = localStorage.getItem(THEME_KEY);
-
-  // Якщо тема вже була збережена, використовуємо її
   if (savedTheme === "dark" || savedTheme === "light") {
     return savedTheme;
   }
